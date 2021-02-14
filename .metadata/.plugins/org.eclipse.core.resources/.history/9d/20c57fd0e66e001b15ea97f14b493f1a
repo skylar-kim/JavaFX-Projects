@@ -259,6 +259,12 @@ public class DealKim extends Application {
 				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
 				if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
 					suitcaseClickedAction(eraseSuitcaseIdx);
+//					dealButton.setStyle(promptstyle);
+//					nodealButton.setStyle(nodealpromptstyle);
+//					
+//					labelChooseSuitcase.setText("");
+//					
+//					suitcaseAction(eraseSuitcaseIdx);
 				} 
 				
 			});
@@ -279,8 +285,16 @@ public class DealKim extends Application {
 					}
 					if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
 						suitcaseClickedAction(eraseSuitcaseIdx);
+//						dealButton.setStyle(promptstyle);
+//						nodealButton.setStyle(nodealpromptstyle);
+//						
+//						labelChooseSuitcase.setText("");
+//						
+//						suitcaseAction(eraseSuitcaseIdx);
 					}
+					
 				} 
+				
 			});
 			
 			
