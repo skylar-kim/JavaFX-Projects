@@ -18,6 +18,7 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
@@ -45,18 +46,26 @@ public class DealKim extends Application {
 	Map<Integer, Label> moneyLabelMap = new HashMap<>();
 	
 	
-	int chosenSuitcaseIdx = 0;
+	int chosenSuitcaseIdx = -1;
 	int suitcaseLeft = 10;
 	double offer = 0;
 	boolean chosenSuitcase = false;
 	boolean dealChoice = false;
 	boolean promptDealChoice = false;
+	
 	String moneyTableStyleFilled = "-fx-font-size:20px; -fx-border-color:black; -fx-padding: 5px 6px; -fx-background-color:pink;";
+	String normalbtnstyle = "-fx-font-size:20px; -fx-border-color:black; -fx-padding: 20px 10px;";
+	String promptstyle = "-fx-background-color: yellow; -fx-font-size:20px; -fx-border-color:black; -fx-padding: 20px 10px;";
+	String nodealpromptstyle = "-fx-background-color: red; -fx-font-size:20px; -fx-border-color:black; -fx-padding: 20px 10px;";
 	
 	Label offerLabel;
 	Label prompt;
 	Label chosenSuitcaseOutput;
 	Label earningsLabel;
+	Label labelChooseSuitcase;
+	
+	Button dealButton;
+	Button nodealButton;
 	
 	
 	public static void main(String[] args) {
@@ -66,7 +75,7 @@ public class DealKim extends Application {
 	public void start(Stage stage) {
 		root = new VBox();
 		stage.setTitle("Deal or No Deal");
-		scene = new Scene(root, 700,700);
+		scene = new Scene(root, 700,900);
 		stage.setScene(scene);
 		stage.show();
 		st = stage;
@@ -79,13 +88,15 @@ public class DealKim extends Application {
 		
 		ChosenSuitcase io = new ChosenSuitcase();
 		
+		ChooseASuitcase chooseSuitcasePrompt = new ChooseASuitcase();
+		
 		Suitcase suitcases = new Suitcase();
 		
 		DealButtons dealbuttons = new DealButtons();
 		
 		Earnings earnings = new Earnings();
 		
-		root.getChildren().addAll(dealerBox, moneytable, io, suitcases, dealbuttons, earnings);
+		root.getChildren().addAll(dealerBox, moneytable, io, suitcases, chooseSuitcasePrompt, dealbuttons, earnings);
 		
 		
 	}
@@ -181,6 +192,17 @@ public class DealKim extends Application {
 		
 	}
 	
+	public class ChooseASuitcase extends BorderPane {
+		String style1 = "-fx-font-size:40px; -fx-padding: 10px 10px;";
+		public ChooseASuitcase() {
+			setPadding(new Insets(10));
+			labelChooseSuitcase = new Label();
+			labelChooseSuitcase.setText("");
+			labelChooseSuitcase.setStyle(style1);
+			setCenter(labelChooseSuitcase);
+		}
+	}
+	
 	public class Suitcase extends GridPane {
 		
 		String style = "-fx-font-size:20px; -fx-border-color: black; -fx-border-width: 2px; -fx-padding: 20px 10px;";
@@ -216,6 +238,8 @@ public class DealKim extends Application {
 				}
 			}
 			
+			
+			
 			// add the labels to the gridpane
 			for (int i = 0; i < 5; i++) {
 				add(suitcaseList.get(i), i, 1);
@@ -234,6 +258,11 @@ public class DealKim extends Application {
 			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
 				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
 				if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
+					dealButton.setStyle(promptstyle);
+					nodealButton.setStyle(nodealpromptstyle);
+					
+					labelChooseSuitcase.setText("");
+					
 					suitcaseAction(eraseSuitcaseIdx);
 				} 
 				
@@ -254,6 +283,11 @@ public class DealKim extends Application {
 						}
 					}
 					if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
+						dealButton.setStyle(promptstyle);
+						nodealButton.setStyle(nodealpromptstyle);
+						
+						labelChooseSuitcase.setText("");
+						
 						suitcaseAction(eraseSuitcaseIdx);
 					}
 					
@@ -295,6 +329,7 @@ public class DealKim extends Application {
 			
 			if (suitcaseLeft == 0){
 				earningsLabel.setText("$" + suitcaseMoneyList.get(chosenSuitcaseIdx));
+				labelChooseSuitcase.setText("Game Over");
 			} 
 		}
 		
@@ -365,38 +400,49 @@ public class DealKim extends Application {
 	
 	
 	public class DealButtons extends GridPane {
-		String style = "-fx-font-size:20px; -fx-border-color:black; -fx-padding: 20px 10px;";
+		
 		public DealButtons() {
 			setPadding(new Insets(70));
 			setHgap(150);
 			setVgap(10);
 			
-			Button dealButton = new Button();
+			
+			dealButton = new Button();
 			dealButton.setText("DEAL");
-			dealButton.setStyle(style);
+			dealButton.setStyle(normalbtnstyle);
 			dealButton.setPrefWidth(200);
 			dealButton.setFocusTraversable(true);
 			add(dealButton, 0,0);
 			dealButton.setOnAction(e->{
 				if (promptDealChoice) {
-					promptDealChoice = false;
-					dealChoice = true;
-					earningsLabel.setText("$" + (int)offer);
+					dealActions();
+//					dealButton.setStyle(normalbtnstyle);
+//					nodealButton.setStyle(normalbtnstyle);
+//					promptDealChoice = false;
+//					dealChoice = true;
+//					earningsLabel.setText("$" + (int)offer);
+//					labelChooseSuitcase.setText("Game Over");
 				}
 				
 			});
 			
 			
-			Button nodealButton = new Button();
+			nodealButton = new Button();
 			nodealButton.setText("NO DEAL");
-			nodealButton.setStyle(style);
+			nodealButton.setStyle(normalbtnstyle);
 			nodealButton.setPrefWidth(200);
 			nodealButton.setFocusTraversable(true);
 			add(nodealButton, 1,0);
 			nodealButton.setOnAction(e->{
 				if (promptDealChoice) {
-					promptDealChoice = false;
-					dealChoice = false;
+					nodealActions();
+//					dealButton.setStyle(normalbtnstyle);
+//					nodealButton.setStyle(normalbtnstyle);
+//					
+//					labelChooseSuitcase.setText("Choose a Suitcase");
+//					
+//					promptDealChoice = false;
+//					dealChoice = false;
 				}
 				
 			});
@@ -405,16 +451,45 @@ public class DealKim extends Application {
 				
 				if (ke.getCode() == KeyCode.D) {
 					if (promptDealChoice) {
-						promptDealChoice = false;
-						dealChoice = true;
-						earningsLabel.setText("$" + (int)offer);
+						dealActions();
+//						dealButton.setStyle(normalbtnstyle);
+//						nodealButton.setStyle(normalbtnstyle);
+//						promptDealChoice = false;
+//						dealChoice = true;
+//						earningsLabel.setText("$" + (int)offer);
+//						labelChooseSuitcase.setText("Game Over");
 					}
 					
 				} else if (ke.getCode() == KeyCode.N) {
-					promptDealChoice = false;
-					dealChoice = false;
+					nodealActions();
+//					dealButton.setStyle(normalbtnstyle);
+//					nodealButton.setStyle(normalbtnstyle);
+//					
+//					labelChooseSuitcase.setText("Choose a Suitcase");
+//					
+//					promptDealChoice = false;
+//					dealChoice = false;
 				}
 			});
+		}
+		
+		public void dealActions() {
+			dealButton.setStyle(normalbtnstyle);
+			nodealButton.setStyle(normalbtnstyle);
+			promptDealChoice = false;
+			dealChoice = true;
+			earningsLabel.setText("$" + (int)offer);
+			labelChooseSuitcase.setText("Game Over");
+		}
+		
+		public void nodealActions() {
+			dealButton.setStyle(normalbtnstyle);
+			nodealButton.setStyle(normalbtnstyle);
+			
+			labelChooseSuitcase.setText("Choose a Suitcase");
+			
+			promptDealChoice = false;
+			dealChoice = false;
 		}
 		
 	}
