@@ -47,7 +47,7 @@ public class DealKim extends Application {
 	
 	int chosenSuitcaseIdx = 0;
 	int suitcaseLeft = 10;
-	double offer;
+	double offer = 0;
 	boolean chosenSuitcase = false;
 	boolean dealChoice = false;
 	boolean promptDealChoice = false;
@@ -233,7 +233,10 @@ public class DealKim extends Application {
 			// calls suitcaseAction (the main game logic)
 			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
 				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
-				suitcaseAction(eraseSuitcaseIdx);
+				if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
+					suitcaseAction(eraseSuitcaseIdx);
+				} 
+				
 			});
 			
 			// event filter for when the suitcases are toggled with the keyboard
@@ -250,7 +253,10 @@ public class DealKim extends Application {
 							eraseSuitcaseIdx = i;
 						}
 					}
-					suitcaseAction(eraseSuitcaseIdx);
+					if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
+						suitcaseAction(eraseSuitcaseIdx);
+					}
+					
 				} 
 				
 			});
@@ -268,14 +274,6 @@ public class DealKim extends Application {
 				prompt.setText("Your Suitcase: ");
 				chosenSuitcaseOutput.setText("Suitcase " + (chosenSuitcaseIdx+1));
 				
-				// calculating the dealer's offer
-//				double totalLeft = 0;
-//				for (int i = 0; i < suitcaseMoneyList.size(); i++) {
-//					if (i != chosenSuitcaseIdx) {
-//						totalLeft += suitcaseMoneyList.get(i); 
-//					}
-//				}
-//				offer = (totalLeft / suitcaseLeft) * .90;
 				calculateOffer();
 				offerLabel.setText("$" + Integer.toString((int)offer));
 				promptDealChoice = true;
@@ -287,18 +285,9 @@ public class DealKim extends Application {
 				removedSuitcaseIdx.add(suitcaseIndex);
 				suitcaseList.get(suitcaseIndex).setStyle(invisible);
 				suitcaseLeft--;
-				int suitcaseAmount = suitcaseMoneyList.get(suitcaseIndex);
+				//int suitcaseAmount = suitcaseMoneyList.get(suitcaseIndex);
 				moneyLabelMap.get(suitcaseMoneyList.get(suitcaseIndex)).setStyle(moneyTableStyleFilled);
 				
-				
-//				double totalLeft = 0;
-//				for (int i = 0; i < suitcaseMoneyList.size(); i++) {
-//					if (i != chosenSuitcaseIdx && !removedSuitcaseIdx.contains(i)) {
-//						totalLeft += suitcaseMoneyList.get(i); 
-//					}
-//				}
-//				
-//				offer = (totalLeft / suitcaseLeft) * .90;
 				calculateOffer();
 				offerLabel.setText("$" + Integer.toString((int)offer));
 				promptDealChoice = true;
@@ -312,7 +301,7 @@ public class DealKim extends Application {
 		public void calculateOffer() {
 			double totalLeft = 0;
 			for (int i = 0; i < suitcaseMoneyList.size(); i++) {
-				if (i != chosenSuitcaseIdx) {
+				if (i != chosenSuitcaseIdx && !removedSuitcaseIdx.contains(i)) {
 					totalLeft += suitcaseMoneyList.get(i); 
 				}
 			}
