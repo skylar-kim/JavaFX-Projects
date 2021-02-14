@@ -351,7 +351,7 @@ public class DealKim extends Application {
 			}
 			
 			if (suitcaseLeft == 0){
-				// if there are no more suitcases, game is over
+				// if there are no more suitcaes, game is over
 				earningsLabel.setText("$" + suitcaseMoneyList.get(chosenSuitcaseIdx));
 				labelChooseSuitcase.setText("Game Over");
 				promptDealChoice = false;

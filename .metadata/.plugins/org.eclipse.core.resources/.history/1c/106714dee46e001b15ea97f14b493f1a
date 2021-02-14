@@ -258,13 +258,12 @@ public class DealKim extends Application {
 			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
 				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
 				if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
-					suitcaseClickedAction(eraseSuitcaseIdx);
-//					dealButton.setStyle(promptstyle);
-//					nodealButton.setStyle(nodealpromptstyle);
-//					
-//					labelChooseSuitcase.setText("");
-//					
-//					suitcaseAction(eraseSuitcaseIdx);
+					dealButton.setStyle(promptstyle);
+					nodealButton.setStyle(nodealpromptstyle);
+					
+					labelChooseSuitcase.setText("");
+					
+					suitcaseAction(eraseSuitcaseIdx);
 				} 
 				
 			});
@@ -284,29 +283,18 @@ public class DealKim extends Application {
 						}
 					}
 					if (eraseSuitcaseIdx != chosenSuitcaseIdx) {
-						suitcaseClickedAction(eraseSuitcaseIdx);
-//						dealButton.setStyle(promptstyle);
-//						nodealButton.setStyle(nodealpromptstyle);
-//						
-//						labelChooseSuitcase.setText("");
-//						
-//						suitcaseAction(eraseSuitcaseIdx);
+						dealButton.setStyle(promptstyle);
+						nodealButton.setStyle(nodealpromptstyle);
+						
+						labelChooseSuitcase.setText("");
+						
+						suitcaseAction(eraseSuitcaseIdx);
 					}
 					
 				} 
 				
 			});
 			
-			
-			
-		}
-		public void suitcaseClickedAction(int eraseSuitcaseIdx) {
-			dealButton.setStyle(promptstyle);
-			nodealButton.setStyle(nodealpromptstyle);
-			
-			labelChooseSuitcase.setText("");
-			
-			suitcaseAction(eraseSuitcaseIdx);
 		}
 		
 		
@@ -317,32 +305,21 @@ public class DealKim extends Application {
 				chosenSuitcase = true;
 				suitcaseLeft--;
 				
-				// Update the board to display the player's first chosen suitcase
 				prompt.setText("Your Suitcase: ");
 				chosenSuitcaseOutput.setText("Suitcase " + (chosenSuitcaseIdx+1));
 				
-				// Calculate the dealer's first offer and display
 				calculateOffer();
 				offerLabel.setText("$" + Integer.toString((int)offer));
 				promptDealChoice = true;
 				
 				
 			} else if (chosenSuitcase && eraseSuitcaseIdx!= chosenSuitcaseIdx && !promptDealChoice){
-				// this is when the player has chosen their suitcase
-				// and now is choosing suitcases to eliminate
 				int suitcaseIndex = eraseSuitcaseIdx;
 				
-				// add the desired suitcase to remove to a set of other removed suitcase idx's
-				// so that we don't add removed suitcase values when calculating offer
 				removedSuitcaseIdx.add(suitcaseIndex);
-				
-				// make the removed suitcase invisible to the player
 				suitcaseList.get(suitcaseIndex).setStyle(invisible);
-				
-				// decrement the suitcases available on the board
 				suitcaseLeft--;
-				
-				// set the corresponding money table value as marked
+				//int suitcaseAmount = suitcaseMoneyList.get(suitcaseIndex);
 				moneyLabelMap.get(suitcaseMoneyList.get(suitcaseIndex)).setStyle(moneyTableStyleFilled);
 				
 				calculateOffer();
@@ -351,10 +328,8 @@ public class DealKim extends Application {
 			}
 			
 			if (suitcaseLeft == 0){
-				// if there are no more suitcases, game is over
 				earningsLabel.setText("$" + suitcaseMoneyList.get(chosenSuitcaseIdx));
 				labelChooseSuitcase.setText("Game Over");
-				promptDealChoice = false;
 			} 
 		}
 		
@@ -441,6 +416,12 @@ public class DealKim extends Application {
 			dealButton.setOnAction(e->{
 				if (promptDealChoice) {
 					dealActions();
+//					dealButton.setStyle(normalbtnstyle);
+//					nodealButton.setStyle(normalbtnstyle);
+//					promptDealChoice = false;
+//					dealChoice = true;
+//					earningsLabel.setText("$" + (int)offer);
+//					labelChooseSuitcase.setText("Game Over");
 				}
 				
 			});
@@ -455,22 +436,43 @@ public class DealKim extends Application {
 			nodealButton.setOnAction(e->{
 				if (promptDealChoice) {
 					nodealActions();
+//					dealButton.setStyle(normalbtnstyle);
+//					nodealButton.setStyle(normalbtnstyle);
+//					
+//					labelChooseSuitcase.setText("Choose a Suitcase");
+//					
+//					promptDealChoice = false;
+//					dealChoice = false;
 				}
+				
 			});
 			
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent ke) -> {
+				
 				if (ke.getCode() == KeyCode.D) {
 					if (promptDealChoice) {
 						dealActions();
+//						dealButton.setStyle(normalbtnstyle);
+//						nodealButton.setStyle(normalbtnstyle);
+//						promptDealChoice = false;
+//						dealChoice = true;
+//						earningsLabel.setText("$" + (int)offer);
+//						labelChooseSuitcase.setText("Game Over");
 					}
 					
 				} else if (ke.getCode() == KeyCode.N) {
 					nodealActions();
+//					dealButton.setStyle(normalbtnstyle);
+//					nodealButton.setStyle(normalbtnstyle);
+//					
+//					labelChooseSuitcase.setText("Choose a Suitcase");
+//					
+//					promptDealChoice = false;
+//					dealChoice = false;
 				}
 			});
 		}
 		
-		// Program actions to execute when player hits DEAL
 		public void dealActions() {
 			dealButton.setStyle(normalbtnstyle);
 			nodealButton.setStyle(normalbtnstyle);
@@ -480,7 +482,6 @@ public class DealKim extends Application {
 			labelChooseSuitcase.setText("Game Over");
 		}
 		
-		// Program actions to execute when player hits NO DEAL
 		public void nodealActions() {
 			dealButton.setStyle(normalbtnstyle);
 			nodealButton.setStyle(normalbtnstyle);
