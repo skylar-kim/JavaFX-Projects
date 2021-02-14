@@ -192,6 +192,7 @@ public class DealKim extends Application {
 			
 			int[] assignedamt = {1,5,10,100,1000,5000,10000,100000,500000,1000000};
 			int randomIdx = rand.nextInt(10);
+			//visited.add(randomIdx);
 			for (int i = 0; i < 1; i++) {
 				for (int j = 0; j < 10; j++) {
 					Label box = new Label();
@@ -222,12 +223,8 @@ public class DealKim extends Application {
 				focusCheck();
 			});
 			
-			//SuitcaseHandler sh = new SuitcaseHandler();
-			//scene.addEventHandler(MouseEvent.MOUSE_CLICKED, sh);
-			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
-				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
-				suitcaseAction(eraseSuitcaseIdx);
-			});
+			SuitcaseHandler sh = new SuitcaseHandler();
+			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, sh);
 			
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent ke) -> {
 				if (ke.getCode() == KeyCode.ENTER) {
@@ -235,37 +232,39 @@ public class DealKim extends Application {
 					for (int i = 0; i < 10; i++) {
 						Label l = suitcaseList.get(i);
 						if (l.isFocused() && !chosenSuitcase) {
-							// this is the suitcase the player chooses in the beginning
+							System.out.println("Player's Suitcase: " + (i+1));
 							chosenSuitcaseIdx = i;
 						} else if (l.isFocused() && chosenSuitcase) {
-							// this is the suitcase the player chooses to erase
 							eraseSuitcaseIdx = i;
+							System.out.println("want to remove suitcase: " + (i+1));
 						}
+						
 					}
 					suitcaseAction(eraseSuitcaseIdx);
+					
 				} 
+				
+				
 				
 			});
 			
 		}
 		
-//		public class SuitcaseHandler implements EventHandler<MouseEvent> {
-//			public SuitcaseHandler() {
-//				
-//			}
-//			
-//			@Override 
-//			public void handle(MouseEvent m) {
-//				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
-//				suitcaseAction(eraseSuitcaseIdx);
-//				System.out.println(eraseSuitcaseIdx);
-//				
-//			}
-//		}
+		public class SuitcaseHandler implements EventHandler<MouseEvent> {
+			public SuitcaseHandler() {
+				
+			}
+			
+			@Override 
+			public void handle(MouseEvent m) {
+				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
+				suitcaseAction(eraseSuitcaseIdx);
+				
+			}
+		}
 		
 		public void suitcaseAction(int eraseSuitcaseIdx) {
 			if (!chosenSuitcase) {
-				chosenSuitcaseIdx = eraseSuitcaseIdx;
 				chosenSuitcase = true;
 				suitcaseLeft--;
 				System.out.println("Suitcases Left: " + suitcaseLeft);

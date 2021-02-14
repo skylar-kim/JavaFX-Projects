@@ -222,12 +222,12 @@ public class DealKim extends Application {
 				focusCheck();
 			});
 			
-			//SuitcaseHandler sh = new SuitcaseHandler();
-			//scene.addEventHandler(MouseEvent.MOUSE_CLICKED, sh);
-			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
-				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
-				suitcaseAction(eraseSuitcaseIdx);
-			});
+			SuitcaseHandler sh = new SuitcaseHandler();
+			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, sh);
+//			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
+//				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
+//				suitcaseAction(eraseSuitcaseIdx);
+//			});
 			
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent ke) -> {
 				if (ke.getCode() == KeyCode.ENTER) {
@@ -249,23 +249,22 @@ public class DealKim extends Application {
 			
 		}
 		
-//		public class SuitcaseHandler implements EventHandler<MouseEvent> {
-//			public SuitcaseHandler() {
-//				
-//			}
-//			
-//			@Override 
-//			public void handle(MouseEvent m) {
-//				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
-//				suitcaseAction(eraseSuitcaseIdx);
-//				System.out.println(eraseSuitcaseIdx);
-//				
-//			}
-//		}
+		public class SuitcaseHandler implements EventHandler<MouseEvent> {
+			public SuitcaseHandler() {
+				
+			}
+			
+			@Override 
+			public void handle(MouseEvent m) {
+				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
+				suitcaseAction(eraseSuitcaseIdx);
+				System.out.println(eraseSuitcaseIdx);
+				
+			}
+		}
 		
 		public void suitcaseAction(int eraseSuitcaseIdx) {
 			if (!chosenSuitcase) {
-				chosenSuitcaseIdx = eraseSuitcaseIdx;
 				chosenSuitcase = true;
 				suitcaseLeft--;
 				System.out.println("Suitcases Left: " + suitcaseLeft);

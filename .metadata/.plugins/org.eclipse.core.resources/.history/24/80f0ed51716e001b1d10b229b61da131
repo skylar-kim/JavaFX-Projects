@@ -146,6 +146,7 @@ public class DealKim extends Application {
 				for (int j = 0; j < amounts.length; j++) {
 					Label label = new Label(amounts[j]);
 					label.setStyle(moneyTableStyle);
+					//System.out.println(assignedamt[j]);
 					moneyLabelMap.put(assignedamt[j], label);
 					moneyLabel.add(label);
 					add(label, j, 0);
@@ -192,6 +193,7 @@ public class DealKim extends Application {
 			
 			int[] assignedamt = {1,5,10,100,1000,5000,10000,100000,500000,1000000};
 			int randomIdx = rand.nextInt(10);
+			//visited.add(randomIdx);
 			for (int i = 0; i < 1; i++) {
 				for (int j = 0; j < 10; j++) {
 					Label box = new Label();
@@ -222,12 +224,8 @@ public class DealKim extends Application {
 				focusCheck();
 			});
 			
-			//SuitcaseHandler sh = new SuitcaseHandler();
-			//scene.addEventHandler(MouseEvent.MOUSE_CLICKED, sh);
-			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
-				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
-				suitcaseAction(eraseSuitcaseIdx);
-			});
+			SuitcaseHandler sh = new SuitcaseHandler();
+			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, sh);
 			
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent ke) -> {
 				if (ke.getCode() == KeyCode.ENTER) {
@@ -235,37 +233,231 @@ public class DealKim extends Application {
 					for (int i = 0; i < 10; i++) {
 						Label l = suitcaseList.get(i);
 						if (l.isFocused() && !chosenSuitcase) {
-							// this is the suitcase the player chooses in the beginning
+							System.out.println("Player's Suitcase: " + (i+1));
 							chosenSuitcaseIdx = i;
 						} else if (l.isFocused() && chosenSuitcase) {
-							// this is the suitcase the player chooses to erase
 							eraseSuitcaseIdx = i;
+							System.out.println("want to remove suitcase: " + (i+1));
 						}
+						
 					}
 					suitcaseAction(eraseSuitcaseIdx);
+					/*
+					if (!chosenSuitcase) {
+						chosenSuitcase = true;
+						suitcaseLeft--;
+						System.out.println("Suitcases Left: " + suitcaseLeft);
+						System.out.println("Player chose suitcase: " + chosenSuitcaseIdx);
+						prompt.setText("Your Suitcase: ");
+						chosenSuitcaseOutput.setText("Suitcase " + (chosenSuitcaseIdx+1));
+						
+						System.out.println("Player's Suitcase: " + (chosenSuitcaseIdx+1) + " value is " + 
+						suitcaseMoneyList.get(chosenSuitcaseIdx));
+						
+						double totalLeft = 0;
+						for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+							if (i != chosenSuitcaseIdx) {
+								totalLeft += suitcaseMoneyList.get(i); 
+							}
+						}
+						offer = (totalLeft / suitcaseLeft) * .90;
+						offerLabel.setText("$" + Integer.toString((int)offer));
+						promptDealChoice = true;
+						
+						
+					} else if (chosenSuitcase && eraseSuitcaseIdx!= chosenSuitcaseIdx && !promptDealChoice){
+						int suitcaseIndex = eraseSuitcaseIdx;
+						System.out.println("Want to get rid of this suitcase.");
+						System.out.println("Suitcase: " + (suitcaseIndex+1) + " value is " + 
+								suitcaseMoneyList.get(suitcaseIndex));
+						
+						removedSuitcaseIdx.add(suitcaseIndex);
+						suitcaseList.get(suitcaseIndex).setStyle(invisible);
+						suitcaseLeft--;
+						int suitcaseAmount = suitcaseMoneyList.get(suitcaseIndex);
+						System.out.println("Suitcase Amount: " + suitcaseAmount);
+						//System.out.println("Does moneyLabelMap contain amount? " + moneyLabelMap.containsKey(suitcaseAmount));
+						moneyLabelMap.get(suitcaseMoneyList.get(suitcaseIndex)).setStyle(moneyTableStyleFilled);
+						//moneyLabel.get(0).setStyle(style + " -fx-background-color:pink;");
+						//moneyLabel.get(suitcaseIndex).setStyle();
+						System.out.println("Suitcases Left: " + suitcaseLeft);
+						
+						double totalLeft = 0;
+						for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+							if (i != chosenSuitcaseIdx && !removedSuitcaseIdx.contains(i)) {
+								//System.out.println(suitcaseMoneyList.get(i));
+								totalLeft += suitcaseMoneyList.get(i); 
+							}
+						}
+						
+						offer = (totalLeft / suitcaseLeft) * .90;
+						offerLabel.setText("$" + Integer.toString((int)offer));
+						promptDealChoice = true;
+					}
+					
+					if (suitcaseLeft == 0){
+						System.out.println("No more suitcases, must end game.");
+						earningsLabel.setText("$" + suitcaseMoneyList.get(chosenSuitcaseIdx));
+					} 
+					*/
 				} 
+				
+				
 				
 			});
 			
+//			scene.addEventHandler(javafx.scene.input.MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
+//				if (!chosenSuitcase) {
+//					chosenSuitcase = true;
+//					chosenSuitcaseIdx = clickAt(m.getX(), m.getY());
+//					suitcaseLeft--;
+//					System.out.println("Suitcases Left: " + suitcaseLeft);
+//					System.out.println("Player chose suitcase: " + chosenSuitcaseIdx);
+//					prompt.setText("Your Suitcase: ");
+//					chosenSuitcaseOutput.setText("Suitcase " + (chosenSuitcaseIdx+1));
+//					
+//					System.out.println("Player's Suitcase: " + (chosenSuitcaseIdx+1) + " value is " + 
+//					suitcaseMoneyList.get(chosenSuitcaseIdx));
+//					
+//					// display dealer's offer after first pick?
+//					
+//					// calculate the dealer's first offer
+//					double totalLeft = 0;
+//					for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+//						if (i != chosenSuitcaseIdx) {
+//							totalLeft += suitcaseMoneyList.get(i); 
+//						}
+//					}
+//					offer = (totalLeft / suitcaseLeft) * .90;
+//					offerLabel.setText("$" + Integer.toString((int)offer));
+//					promptDealChoice = true;
+//					
+//					
+//				} else if (chosenSuitcase && clickAt(m.getX(), m.getY())!= chosenSuitcaseIdx && !promptDealChoice){
+//					int suitcaseIndex = clickAt(m.getX(), m.getY());
+//					System.out.println("Want to get rid of this suitcase.");
+//					System.out.println("Suitcase: " + (suitcaseIndex+1) + " value is " + 
+//							suitcaseMoneyList.get(suitcaseIndex));
+//					
+//					removedSuitcaseIdx.add(suitcaseIndex);
+//					suitcaseList.get(suitcaseIndex).setStyle(invisible);
+//					suitcaseLeft--;
+//					int suitcaseAmount = suitcaseMoneyList.get(suitcaseIndex);
+//					System.out.println("Suitcase Amount: " + suitcaseAmount);
+//					//System.out.println("Does moneyLabelMap contain amount? " + moneyLabelMap.containsKey(suitcaseAmount));
+//					moneyLabelMap.get(suitcaseMoneyList.get(suitcaseIndex)).setStyle(moneyTableStyleFilled);
+//					//moneyLabel.get(0).setStyle(style + " -fx-background-color:pink;");
+//					//moneyLabel.get(suitcaseIndex).setStyle();
+//					System.out.println("Suitcases Left: " + suitcaseLeft);
+//					
+//					double totalLeft = 0;
+//					for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+//						if (i != chosenSuitcaseIdx && !removedSuitcaseIdx.contains(i)) {
+//							//System.out.println(suitcaseMoneyList.get(i));
+//							totalLeft += suitcaseMoneyList.get(i); 
+//						}
+//					}
+//					
+//					offer = (totalLeft / suitcaseLeft) * .90;
+//					offerLabel.setText("$" + Integer.toString((int)offer));
+//					promptDealChoice = true;
+//				} else {
+//					int suitcaseIndex = clickAt(m.getX(), m.getY());
+//					System.out.println("Suitcase: " + (suitcaseIndex+1) + " value is " + 
+//							suitcaseMoneyList.get(suitcaseIndex));
+//					
+//				}
+//				
+//				if (suitcaseLeft == 0){
+//					System.out.println("No more suitcases, must end game.");
+//					earningsLabel.setText("$" + suitcaseMoneyList.get(chosenSuitcaseIdx));
+//				} 
+//				
+//			});
 		}
 		
-//		public class SuitcaseHandler implements EventHandler<MouseEvent> {
-//			public SuitcaseHandler() {
-//				
-//			}
-//			
-//			@Override 
-//			public void handle(MouseEvent m) {
-//				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
-//				suitcaseAction(eraseSuitcaseIdx);
-//				System.out.println(eraseSuitcaseIdx);
-//				
-//			}
-//		}
+		public class SuitcaseHandler implements EventHandler<MouseEvent> {
+			public SuitcaseHandler() {
+				
+			}
+			
+			@Override 
+			public void handle(MouseEvent m) {
+				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
+				suitcaseAction(eraseSuitcaseIdx);
+				/*
+				if (!chosenSuitcase) {
+					chosenSuitcase = true;
+					//chosenSuitcaseIdx = clickAt(m.getX(), m.getY());
+					chosenSuitcaseIdx = eraseSuitcaseIdx;
+					suitcaseLeft--;
+					System.out.println("Suitcases Left: " + suitcaseLeft);
+					System.out.println("Player chose suitcase: " + chosenSuitcaseIdx);
+					prompt.setText("Your Suitcase: ");
+					chosenSuitcaseOutput.setText("Suitcase " + (chosenSuitcaseIdx+1));
+					
+					System.out.println("Player's Suitcase: " + (chosenSuitcaseIdx+1) + " value is " + 
+					suitcaseMoneyList.get(chosenSuitcaseIdx));
+					
+					// display dealer's offer after first pick?
+					
+					// calculate the dealer's first offer
+					double totalLeft = 0;
+					for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+						if (i != chosenSuitcaseIdx) {
+							totalLeft += suitcaseMoneyList.get(i); 
+						}
+					}
+					offer = (totalLeft / suitcaseLeft) * .90;
+					offerLabel.setText("$" + Integer.toString((int)offer));
+					promptDealChoice = true;
+					
+					// else if (chosenSuitcase && clickAt(m.getX(), m.getY())!= chosenSuitcaseIdx && !promptDealChoice)
+				} else if (chosenSuitcase && eraseSuitcaseIdx!= chosenSuitcaseIdx && !promptDealChoice){
+					int suitcaseIndex = eraseSuitcaseIdx;
+					System.out.println("Want to get rid of this suitcase.");
+					System.out.println("Suitcase: " + (suitcaseIndex+1) + " value is " + 
+							suitcaseMoneyList.get(suitcaseIndex));
+					
+					removedSuitcaseIdx.add(suitcaseIndex);
+					suitcaseList.get(suitcaseIndex).setStyle(invisible);
+					suitcaseLeft--;
+					int suitcaseAmount = suitcaseMoneyList.get(suitcaseIndex);
+					System.out.println("Suitcase Amount: " + suitcaseAmount);
+					//System.out.println("Does moneyLabelMap contain amount? " + moneyLabelMap.containsKey(suitcaseAmount));
+					moneyLabelMap.get(suitcaseMoneyList.get(suitcaseIndex)).setStyle(moneyTableStyleFilled);
+					//moneyLabel.get(0).setStyle(style + " -fx-background-color:pink;");
+					//moneyLabel.get(suitcaseIndex).setStyle();
+					System.out.println("Suitcases Left: " + suitcaseLeft);
+					
+					double totalLeft = 0;
+					for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+						if (i != chosenSuitcaseIdx && !removedSuitcaseIdx.contains(i)) {
+							//System.out.println(suitcaseMoneyList.get(i));
+							totalLeft += suitcaseMoneyList.get(i); 
+						}
+					}
+					
+					offer = (totalLeft / suitcaseLeft) * .90;
+					offerLabel.setText("$" + Integer.toString((int)offer));
+					promptDealChoice = true;
+				} else {
+					int suitcaseIndex = clickAt(m.getX(), m.getY());
+					System.out.println("Suitcase: " + (suitcaseIndex+1) + " value is " + 
+							suitcaseMoneyList.get(suitcaseIndex));
+					
+				}
+				
+				if (suitcaseLeft == 0){
+					System.out.println("No more suitcases, must end game.");
+					earningsLabel.setText("$" + suitcaseMoneyList.get(chosenSuitcaseIdx));
+				} 
+				*/
+			}
+		}
 		
 		public void suitcaseAction(int eraseSuitcaseIdx) {
 			if (!chosenSuitcase) {
-				chosenSuitcaseIdx = eraseSuitcaseIdx;
 				chosenSuitcase = true;
 				suitcaseLeft--;
 				System.out.println("Suitcases Left: " + suitcaseLeft);

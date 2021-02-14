@@ -258,14 +258,12 @@ public class DealKim extends Application {
 //			public void handle(MouseEvent m) {
 //				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
 //				suitcaseAction(eraseSuitcaseIdx);
-//				System.out.println(eraseSuitcaseIdx);
 //				
 //			}
 //		}
 		
 		public void suitcaseAction(int eraseSuitcaseIdx) {
 			if (!chosenSuitcase) {
-				chosenSuitcaseIdx = eraseSuitcaseIdx;
 				chosenSuitcase = true;
 				suitcaseLeft--;
 				System.out.println("Suitcases Left: " + suitcaseLeft);
