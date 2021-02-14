@@ -418,7 +418,7 @@ public class DealKim extends Application {
 			});
 			
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent ke) -> {
-				//System.out.println("Filter key code: " + ke.getCode());
+				System.out.println("Filter key code: " + ke.getCode());
 				
 				if (ke.getCode() == KeyCode.D) {
 					if (promptDealChoice) {
