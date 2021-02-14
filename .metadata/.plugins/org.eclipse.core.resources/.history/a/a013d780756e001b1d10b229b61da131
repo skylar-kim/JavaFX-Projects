@@ -36,6 +36,7 @@ public class DealKim extends Application {
 	VBox root;
 	
 	// Data Structures to keep track of the actions going on in the program
+	//List<Double> moneyTableList;
 	List<Label> suitcaseList = new ArrayList<>();
 	List<Integer> suitcaseMoneyList = new ArrayList<>();
 	Set<Integer> visited = new HashSet<>();
@@ -74,6 +75,7 @@ public class DealKim extends Application {
 		root.setStyle("-fx-background-color: white;");
 		offer = 0;
 		Dealer dealerBox = new Dealer();
+		//moneyTableList = new ArrayList<>();
 		
 		MoneyTable moneytable = new MoneyTable();
 		
@@ -93,7 +95,6 @@ public class DealKim extends Application {
 	public class Dealer extends GridPane {
 		
 		public Dealer(){
-			// This is for displaying the Dealer's offer
 			offer = 0;
 			setPrefHeight(100);
 			setPadding(new Insets(10));
@@ -114,7 +115,6 @@ public class DealKim extends Application {
 	
 	public class Earnings extends GridPane{
 		public Earnings() {
-			// this class is for displaying the player's earnings at the end
 			setPadding(new Insets(10));
 			setHgap(5);
 			setVgap(20);
@@ -135,7 +135,6 @@ public class DealKim extends Application {
 	public class MoneyTable extends GridPane {
 		String moneyTableStyle = "-fx-font-size:20px; -fx-border-color:black; -fx-padding: 5px 6px;";
 		public MoneyTable() {
-			// this class displays the suitcases that were eliminated
 			
 			setPadding(new Insets(5));
 			setHgap(11);
@@ -162,7 +161,6 @@ public class DealKim extends Application {
 	public class ChosenSuitcase extends GridPane {
 		String style0 = "-fx-font-size:20px; -fx-padding: 20px 10px;";
 		public ChosenSuitcase() {
-			// this class is for displaying the suitcase that the player chose
 			setPadding(new Insets(10));
 			setHgap(20);
 			setVgap(10);
@@ -187,14 +185,12 @@ public class DealKim extends Application {
 		String focusstyle = "-fx-font-size:20px; -fx-border-color: pink; -fx-border-width: 2px; -fx-padding: 20px 10px;";
 		String invisible = "-fx-text-fill: white;-fx-font-size:20px; -fx-border-color: white; -fx-border-width: 2px; -fx-padding: 20px 10px;";
 		public Suitcase() {
-			// this class is for the suitcase and the main game logic
 			suitcaseMap = new HashMap<>();
 			
 			setPadding(new Insets(10));
 			setHgap(20);
 			setVgap(10);
 			
-			// randomly assign the values to the suitcases
 			int[] assignedamt = {1,5,10,100,1000,5000,10000,100000,500000,1000000};
 			int randomIdx = rand.nextInt(10);
 			for (int i = 0; i < 1; i++) {
@@ -207,7 +203,6 @@ public class DealKim extends Application {
 					while (visited.contains(randomIdx)) {
 						randomIdx = rand.nextInt(10);
 					}
-					// these data structures are helpful for the main game logic
 					visited.add(randomIdx);
 					suitcaseMap.put(box, assignedamt[randomIdx]);
 					suitcaseList.add(box);
@@ -216,7 +211,7 @@ public class DealKim extends Application {
 				}
 			}
 			
-			// add the labels to the gridpane
+
 			for (int i = 0; i < 5; i++) {
 				add(suitcaseList.get(i), i, 1);
 			}
@@ -224,19 +219,16 @@ public class DealKim extends Application {
 				add(suitcaseList.get(i), i-5, 2);
 			}
 			
-			// this is for toggling
 			scene.setOnKeyReleased(e->{
 				focusCheck();
 			});
 			
-			// event handler for when the suitcases are clicked
-			// calls suitcaseAction (the main game logic)
+			
 			scene.addEventHandler(MouseEvent.MOUSE_CLICKED, (MouseEvent m) -> {
 				int eraseSuitcaseIdx = clickAt(m.getX(), m.getY());
 				suitcaseAction(eraseSuitcaseIdx);
 			});
 			
-			// event filter for when the suitcases are toggled with the keyboard
 			scene.addEventFilter(KeyEvent.KEY_PRESSED, (KeyEvent ke) -> {
 				if (ke.getCode() == KeyCode.ENTER) {
 					int eraseSuitcaseIdx = 0;
@@ -269,14 +261,13 @@ public class DealKim extends Application {
 				chosenSuitcaseOutput.setText("Suitcase " + (chosenSuitcaseIdx+1));
 				
 				// calculating the dealer's offer
-//				double totalLeft = 0;
-//				for (int i = 0; i < suitcaseMoneyList.size(); i++) {
-//					if (i != chosenSuitcaseIdx) {
-//						totalLeft += suitcaseMoneyList.get(i); 
-//					}
-//				}
-//				offer = (totalLeft / suitcaseLeft) * .90;
-				calculateOffer();
+				double totalLeft = 0;
+				for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+					if (i != chosenSuitcaseIdx) {
+						totalLeft += suitcaseMoneyList.get(i); 
+					}
+				}
+				offer = (totalLeft / suitcaseLeft) * .90;
 				offerLabel.setText("$" + Integer.toString((int)offer));
 				promptDealChoice = true;
 				
@@ -291,15 +282,14 @@ public class DealKim extends Application {
 				moneyLabelMap.get(suitcaseMoneyList.get(suitcaseIndex)).setStyle(moneyTableStyleFilled);
 				
 				
-//				double totalLeft = 0;
-//				for (int i = 0; i < suitcaseMoneyList.size(); i++) {
-//					if (i != chosenSuitcaseIdx && !removedSuitcaseIdx.contains(i)) {
-//						totalLeft += suitcaseMoneyList.get(i); 
-//					}
-//				}
-//				
-//				offer = (totalLeft / suitcaseLeft) * .90;
-				calculateOffer();
+				double totalLeft = 0;
+				for (int i = 0; i < suitcaseMoneyList.size(); i++) {
+					if (i != chosenSuitcaseIdx && !removedSuitcaseIdx.contains(i)) {
+						totalLeft += suitcaseMoneyList.get(i); 
+					}
+				}
+				
+				offer = (totalLeft / suitcaseLeft) * .90;
 				offerLabel.setText("$" + Integer.toString((int)offer));
 				promptDealChoice = true;
 			}
@@ -307,16 +297,6 @@ public class DealKim extends Application {
 			if (suitcaseLeft == 0){
 				earningsLabel.setText("$" + suitcaseMoneyList.get(chosenSuitcaseIdx));
 			} 
-		}
-		
-		public void calculateOffer() {
-			double totalLeft = 0;
-			for (int i = 0; i < suitcaseMoneyList.size(); i++) {
-				if (i != chosenSuitcaseIdx) {
-					totalLeft += suitcaseMoneyList.get(i); 
-				}
-			}
-			offer = (totalLeft / suitcaseLeft) * .90;
 		}
 		
 		public void focusCheck() {
@@ -396,6 +376,7 @@ public class DealKim extends Application {
 				}
 				
 			});
+			
 			
 			
 			Button nodealButton = new Button();
