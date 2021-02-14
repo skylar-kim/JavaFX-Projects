@@ -1,0 +1,350 @@
+package hw02;
+
+import javafx.application.Application;
+import javafx.application.Application;
+import java.util.ArrayList;
+
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.event.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+import javafx.scene.shape.*;
+import javafx.scene.text.Font;
+
+import java.util.*;
+import javafx.scene.paint.*;
+import javafx.stage.Stage;
+
+public class CalcKimS extends Application {
+
+	StringBuilder sb = new StringBuilder();
+	double result = 0;
+	Button inputButton = new Button();
+	Button outputButton = new Button();
+	Button lbTokg;
+	Button kgTolb;
+	Button fToc;
+	Button cTof;
+	boolean clearScreen = false;
+
+	public static void main(String[] args) {
+		launch(args);
+	}
+
+	public void start(Stage stage) {
+		VBox window = new VBox();
+		Scene scene = new Scene(window, 700, 500);
+		stage.setTitle("Converter");
+		stage.setScene(scene);
+		stage.show();
+		scene.getStylesheets().add("hw02/style.css");
+		stage.setOnCloseRequest(e -> {
+			Platform.exit();
+			System.exit(0);
+		});
+
+		IoMenu ioMenu = new IoMenu();
+		ConverterMenu converterMenu = new ConverterMenu();
+		
+		// window styling
+		window.setPadding(new Insets(75,100,75,100));
+		window.setStyle("-fx-background-color: #F2AEB4;");
+		
+//		window.getStyleClass().add("window");
+//		window.setStyle("-fx-background-color: #eeddff;");
+//		window.setStyle("-fx-vgap: 20;");
+		window.getChildren().addAll(ioMenu, converterMenu);
+	}
+
+	public class IoMenu extends HBox {
+		public IoMenu() {
+			makeIO();
+		}
+
+		public void makeIO() {
+
+			inputButton.setText("");
+			outputButton.setText("");
+			
+			// button styling
+			inputButton.setPrefSize(250, 70);
+			inputButton.setFont(new Font("Arial", 20));
+			
+			
+			
+			outputButton.setPrefSize(250, 70);
+			outputButton.setFont(new Font("Arial", 20));
+			outputButton.setStyle("-fx-background-color: #F2CED1; -fx-border-color: #F294A5");
+			
+
+			getChildren().addAll(inputButton, outputButton);
+		}
+
+	}
+
+	public class ConverterMenu extends HBox {
+		public ConverterMenu() {
+			makeNumPad();
+			makeConverterButton();
+		}
+
+		public void makeNumPad() {
+			GridPane grid = new GridPane();
+
+			Button minus = new Button("-");
+			Button period = new Button(".");
+			// ArrayList<Button> numButtons = new ArrayList<>();
+			// would make buttons with for loop but
+			// dont know how to do event handling...
+
+			Button num0 = new Button("0");
+			Button num1 = new Button("1");
+			Button num2 = new Button("2");
+			Button num3 = new Button("3");
+			Button num4 = new Button("4");
+			Button num5 = new Button("5");
+			Button num6 = new Button("6");
+			Button num7 = new Button("7");
+			Button num8 = new Button("8");
+			Button num9 = new Button("9");
+
+			// Button Action
+			NumpadBtnHandler minusbh = new NumpadBtnHandler(minus, "-");
+			minus.addEventHandler(ActionEvent.ANY, minusbh);
+
+			NumpadBtnHandler periodbh = new NumpadBtnHandler(period, ".");
+			period.addEventHandler(ActionEvent.ANY, periodbh);
+
+			NumpadBtnHandler num0bh = new NumpadBtnHandler(num0, "0");
+			num0.addEventHandler(ActionEvent.ANY, num0bh);
+
+			NumpadBtnHandler num1bh = new NumpadBtnHandler(num1, "1");
+			num1.addEventHandler(ActionEvent.ANY, num1bh);
+
+			NumpadBtnHandler num2bh = new NumpadBtnHandler(num2, "2");
+			num2.addEventHandler(ActionEvent.ANY, num2bh);
+
+			NumpadBtnHandler num3bh = new NumpadBtnHandler(num3, "3");
+			num3.addEventHandler(ActionEvent.ANY, num3bh);
+
+			NumpadBtnHandler num4bh = new NumpadBtnHandler(num4, "4");
+			num4.addEventHandler(ActionEvent.ANY, num4bh);
+
+			NumpadBtnHandler num5bh = new NumpadBtnHandler(num5, "5");
+			num5.addEventHandler(ActionEvent.ANY, num5bh);
+
+			NumpadBtnHandler num6bh = new NumpadBtnHandler(num6, "6");
+			num6.addEventHandler(ActionEvent.ANY, num6bh);
+
+			NumpadBtnHandler num7bh = new NumpadBtnHandler(num7, "7");
+			num7.addEventHandler(ActionEvent.ANY, num7bh);
+
+			NumpadBtnHandler num8bh = new NumpadBtnHandler(num8, "8");
+			num8.addEventHandler(ActionEvent.ANY, num8bh);
+
+			NumpadBtnHandler num9bh = new NumpadBtnHandler(num9, "9");
+			num9.addEventHandler(ActionEvent.ANY, num9bh);
+
+			// Button Styling
+			minus.setPrefSize(100, 70);
+			period.setPrefSize(100, 70);
+
+			num0.setPrefSize(100, 70);
+			num1.setPrefSize(100, 70);
+			num2.setPrefSize(100, 70);
+			num3.setPrefSize(100, 70);
+			num4.setPrefSize(100, 70);
+			num5.setPrefSize(100, 70);
+			num6.setPrefSize(100, 70);
+			num7.setPrefSize(100, 70);
+			num8.setPrefSize(100, 70);
+			num9.setPrefSize(100, 70);
+
+			// add num pad buttons to grid
+			grid.add(num7, 0, 0);
+			grid.add(num8, 1, 0);
+			grid.add(num9, 2, 0);
+
+			grid.add(num4, 0, 1);
+			grid.add(num5, 1, 1);
+			grid.add(num6, 2, 1);
+
+			grid.add(num1, 0, 2);
+			grid.add(num2, 1, 2);
+			grid.add(num3, 2, 2);
+
+			grid.add(minus, 0, 3);
+			grid.add(period, 1, 3);
+			grid.add(num0, 2, 3);
+
+			getChildren().add(grid);
+
+		}
+
+		public class NumpadBtnHandler implements EventHandler<ActionEvent> {
+			Button b;
+			String n;
+
+			public NumpadBtnHandler(Button btn, String num) {
+				b = btn;
+				n = num;
+			}
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					if (clearScreen) {
+						inputButton.setText("");
+						outputButton.setText("");
+						clearScreen = false;
+					}
+					sb.append(n);
+					inputButton.setText(sb.toString());
+
+				} catch (Exception e) {
+
+				}
+
+			}
+		}
+
+		public void makeConverterButton() {
+			VBox vbox = new VBox();
+
+			lbTokg = new Button("lb to kg");
+			kgTolb = new Button("kg to lb");
+			fToc = new Button("F to C");
+			cTof = new Button("C to F");
+
+			// Button Handlers
+			lbTokgBtnHandler lbtokgBtnHandler = new lbTokgBtnHandler();
+			lbTokg.addEventHandler(ActionEvent.ANY, lbtokgBtnHandler);
+
+			kgTolbBtnHandler kgtolbBtnHandler = new kgTolbBtnHandler();
+			kgTolb.addEventHandler(ActionEvent.ANY, kgtolbBtnHandler);
+
+			fTocBtnHandler ftocBtnHandler = new fTocBtnHandler();
+			fToc.addEventHandler(ActionEvent.ANY, ftocBtnHandler);
+
+			cTofBtnHandler ctofBtnHandler = new cTofBtnHandler();
+			cTof.addEventHandler(ActionEvent.ANY, ctofBtnHandler);
+
+			// Button Styling
+			lbTokg.setPrefSize(200, 70);
+			kgTolb.setPrefSize(200, 70);
+			fToc.setPrefSize(200, 70);
+			cTof.setPrefSize(200, 70);
+
+			vbox.getChildren().addAll(lbTokg, kgTolb, fToc, cTof);
+
+			getChildren().add(vbox);
+
+		}
+
+		public class lbTokgBtnHandler implements EventHandler<ActionEvent> {
+			Button b;
+
+			public lbTokgBtnHandler() {
+				b = lbTokg;
+			}
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					result = Double.parseDouble(sb.toString());
+					result *= 0.45359237;
+					outputButton.setText(Double.toString(result));
+					clearScreen = true;
+					sb.setLength(0);
+				} catch (Exception e) {
+					System.out.println("Exception caught: " + e.getMessage());
+					inputButton.setText("");
+					sb.setLength(0);
+
+				}
+
+			}
+		}
+
+		public class kgTolbBtnHandler implements EventHandler<ActionEvent> {
+			Button b;
+
+			public kgTolbBtnHandler() {
+				b = kgTolb;
+			}
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					result = Double.parseDouble(sb.toString());
+					result *= 2.2046226218;
+					outputButton.setText(Double.toString(result));
+					clearScreen = true;
+					sb.setLength(0);
+				} catch (Exception e) {
+					System.out.println("Exception caught: " + e.getMessage());
+					inputButton.setText("");
+					sb.setLength(0);
+
+				}
+
+			}
+		}
+
+		public class fTocBtnHandler implements EventHandler<ActionEvent> {
+			Button b;
+
+			public fTocBtnHandler() {
+				b = fToc;
+			}
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					result = Double.parseDouble(sb.toString());
+					result = (result - 32.0) * (5.0 / 9.0);
+					outputButton.setText(Double.toString(result));
+					clearScreen = true;
+					sb.setLength(0);
+				} catch (Exception e) {
+					System.out.println("Exception caught: " + e.getMessage());
+					inputButton.setText("");
+					sb.setLength(0);
+
+				}
+
+			}
+		}
+
+		public class cTofBtnHandler implements EventHandler<ActionEvent> {
+			Button b;
+
+			public cTofBtnHandler() {
+				b = fToc;
+			}
+
+			@Override
+			public void handle(ActionEvent event) {
+				try {
+					result = Double.parseDouble(sb.toString());
+					result = (result * 1.8) + 32.0;
+					outputButton.setText(Double.toString(result));
+					clearScreen = true;
+					sb.setLength(0);
+				} catch (Exception e) {
+					System.out.println("Exception caught: " + e.getMessage());
+					inputButton.setText("");
+					sb.setLength(0);
+
+				}
+
+			}
+		}
+
+	}
+
+}

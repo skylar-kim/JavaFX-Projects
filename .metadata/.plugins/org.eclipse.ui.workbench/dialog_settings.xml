@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="InstallationDialogSettings">
+		<item key="DIALOG_X_ORIGIN" value="153"/>
+		<item key="DIALOG_Y_ORIGIN" value="-17"/>
+		<item key="DIALOG_WIDTH" value="771"/>
+		<item key="DIALOG_HEIGHT" value="633"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+	<section name="ImportExportAction">
+		<item key="ImportExportPage.STORE_SELECTED_IMPORT_WIZARD_ID" value="org.eclipse.ui.wizards.import.ZipFile"/>
+		<list key="ImportExportPage.STORE_EXPANDED_IMPORT_CATEGORIES">
+			<item value="org.eclipse.ui.Basic"/>
+		</list>
+	</section>
+	<section name="ZipFileImportWizard">
+		<item key="WizardZipFileResourceImportPage1.STORE_OVERWRITE_EXISTING_RESOURCES_ID" value="false"/>
+		<list key="WizardZipFileResourceImportPage1.STORE_SOURCE_NAMES_ID">
+			<item value="/Users/skim/Documents/USC/20211_Spring/ITP368/Week4/mousing.zip"/>
+			<item value="/Users/skim/Documents/USC/20211_Spring/ITP368/Week4/ListsFiles.zip"/>
+			<item value="/Users/skim/Documents/USC/20211_Spring/ITP368/Week3/widgets.zip"/>
+			<item value="/Users/skim/Documents/USC/20211_Spring/ITP368/Week3/CSSStuff.zip"/>
+			<item value="/Users/skim/Documents/USC/20211_Spring/ITP368/Week3/layouts.zip"/>
+			<item value="/Users/skim/Documents/USC/20211_Spring/ITP368/Week2/buttons.zip"/>
+		</list>
+	</section>
+	<section name="NewWizardAction">
+	</section>
+</section>
