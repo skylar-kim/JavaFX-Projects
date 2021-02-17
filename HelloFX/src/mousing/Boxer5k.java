@@ -91,7 +91,9 @@ public class Boxer5k extends Application
     		double x = p.getX();
     		double y = p.getY();
     		shadows = new Rectangle[4]; 
+    		// where we did click the mouse
     		shadows[0] = new Rectangle(x,y, 10, 10);
+    		
     		shadows[1] = new Rectangle(sizex-x-10,y, 10, 10);
     		shadows[2] = new Rectangle(x,sizey-y-10, 10, 10);
     		shadows[3] = new Rectangle(sizex-x-10,sizey-y-10, 10, 10);

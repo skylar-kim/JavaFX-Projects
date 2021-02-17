@@ -38,7 +38,9 @@ public class Boxer3 extends Application
         root.addEventHandler
         (  MouseEvent.MOUSE_CLICKED, 
            (MouseEvent m)->
-           {               
+           {   
+        	   // new Point (m) the point class constructor takes the 
+        	   // x and y of the mouse event and makes a point
                corners[which] = new Point( m );
                if ( which==0 ) // if on point 0, just wait for point 1
                { which = 1; }

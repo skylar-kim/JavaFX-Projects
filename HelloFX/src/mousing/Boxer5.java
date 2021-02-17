@@ -53,6 +53,8 @@ public class Boxer5 extends Application
         );
         
         // mouse released does nothing (except note that mouse is up)
+        // we've already got the box, and while we're dragging it, we're resizing it
+        // so mouse released just means our box is finished drawing
         root.addEventHandler
         (  MouseEvent.MOUSE_RELEASED,
            (MouseEvent m) ->

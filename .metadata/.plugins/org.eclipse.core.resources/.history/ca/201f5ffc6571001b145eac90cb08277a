@@ -1,0 +1,43 @@
+package L07;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+public class Elf extends Application{
+	
+	public static void main(String[] args) {
+		launch(args);
+	}
+	
+	@Override
+    public void start(Stage stage) {
+		Pane root = new Pane();
+		stage.setTitle("Elf Lab");
+		Scene scene = new Scene(root, 700,700);
+		stage.setScene(scene);
+		stage.show();
+		
+		ElfPane newElfPane = new ElfPane();
+		
+		root.getChildren().add(newElfPane);
+		
+	}
+	
+	public class ElfPane extends Pane {
+		Rectangle r;
+		public ElfPane() {
+			this.r = new Rectangle(50,50);
+			r.setX(100);
+			r.setY(100);
+			r.setWidth(100);
+			r.setHeight(100);
+			
+			getChildren().add(r);
+		}
+		
+		this.
+	}
+}
