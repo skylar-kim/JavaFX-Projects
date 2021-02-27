@@ -152,8 +152,8 @@ public class MainUI extends Application {
 				System.out.println("Text Field Input: " + textFieldInput);
 
 				label = new Label(textFieldInput);
-				double randX = Math.random() * 800;
-				double randY = Math.random() * 800;
+				int randX = (int) Math.random() * 150;
+				int randY = (int) Math.random() * 500;
 				System.out.println("randx: " + randX + " randy: " + randY);
 				label.relocate(randX, randY);
 				// label.setText(textFieldInput);
