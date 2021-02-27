@@ -77,9 +77,7 @@ public class MainUI extends Application {
 				drawLineBool = false;
 
 				drawRectangleBool = true;
-				//drawRectangle();
-				dr = new DraggableRectangle();
-				dr.drawRectangle();
+				drawRectangle();
 			});
 
 			lineB.setOnAction(e -> {
@@ -176,7 +174,7 @@ public class MainUI extends Application {
 		private double mouseX;
 		private double mouseY;
 
-		public DraggableRectangle() {
+		public DraggableRectangle(Rectangle r) {
 			super(10,10);
 			
 			

@@ -20,14 +20,13 @@ public class MainUI extends Application {
 
 	// Rectangle Stuff
 	Point[] corners = new Point[2];
-	//Rectangle r;
-	DraggableRectangle dr;
+	Rectangle r;
 	boolean mouseIsPressedRect = false;
 	boolean drawRectangleBool = false;
 
 	// Line Stuff
 	Line l;
-	// MyLine l;
+	//MyLine l;
 	boolean mouseIsPressedLine = false;
 	boolean drawLineBool = false;
 
@@ -77,9 +76,7 @@ public class MainUI extends Application {
 				drawLineBool = false;
 
 				drawRectangleBool = true;
-				//drawRectangle();
-				dr = new DraggableRectangle();
-				dr.drawRectangle();
+				drawRectangle();
 			});
 
 			lineB.setOnAction(e -> {
@@ -101,7 +98,9 @@ public class MainUI extends Application {
 
 			getChildren().addAll(rectangleB, lineB, selectB, deleteB, puttextB, textField, loadB, saveB);
 		}
-		/*
+		
+		
+
 		public void drawRectangle() {
 			if (drawRectangleBool) {
 				System.out.println("Drawing Rectangle");
@@ -126,14 +125,14 @@ public class MainUI extends Application {
 					r.setX(min(corners[0].getX(), corners[1].getX()));
 					r.setY(min(corners[0].getY(), corners[1].getY()));
 				});
+				
 
 			}
 		}
-		*/
 
-		
-
-		
+		public double min(double x, double y) {
+			return (x < y) ? x : y;
+		}
 
 		public void drawLine() {
 			if (drawLineBool) {
@@ -141,7 +140,7 @@ public class MainUI extends Application {
 				root.setOnMousePressed(e -> {
 					l = new Line(e.getX(), e.getY(), e.getX(), e.getY());
 					root.getChildren().add(l);
-					// l = new MyLine(e.getX(), e.getY(), e.getX(), e.getY());
+					//l = new MyLine(e.getX(), e.getY(), e.getX(), e.getY());
 				});
 
 				root.setOnMouseDragged(e -> {
@@ -172,54 +171,69 @@ public class MainUI extends Application {
 
 	}
 	
-	public class DraggableRectangle extends Rectangle {
-		private double mouseX;
-		private double mouseY;
-
-		public DraggableRectangle() {
-			super(10,10);
+	/*
+	public class MyLine extends Pane{
+		Line line;
+		private double xLayout = 0;
+		private double yLayout = 0;
+		private double mousex = 0;
+		private double mousey = 0;
+		public MyLine(double startXcoord, double startYcoord,
+				double endXcoord, double endYcoord) {
+			line = new Line(startXcoord, startYcoord, endXcoord, endYcoord);
+			root.getChildren().add(line);
 			
-			
+			onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent m) {
+					
+					// record the current mouse X and Y position
+					mousex = m.getSceneX();
+					mousey = m.getSceneY();
+					
+					xLayout = getLayoutX();
+					yLayout = getLayoutY();
+					
 
-//			setOnMousePressed(e -> {
-//				mouseX = e.getSceneX();
-//				mouseY = e.getSceneY();
-//			});
-//
-//			setOnMouseDragged(e -> {
-//				double deltaX = e.getSceneX() - mouseX;
-//				double deltaY = e.getSceneY() - mouseY;
-//
-//				relocate(getLayoutX() + deltaX, getLayoutY() + deltaY);
-//				mouseX = e.getSceneX();
-//				mouseY = e.getSceneY();
-//			});
-		}
-		
-		public void drawRectangle() {
-			root.setOnMousePressed(e -> {
-				corners[0] = new Point(e.getX(), e.getY());
-				setX(corners[0].getX());
-				setY(corners[0].getY());
-				root.getChildren().add(this);
+				}
 			});
 			
-			root.setOnMouseDragged(e -> {
-				corners[1] = new Point(e.getX(), e.getY());
-				double xdif = corners[0].xdif(corners[1]);
-				double ydif = corners[0].ydif(corners[1]);
-				setWidth(xdif);
-				setHeight(ydif);
-				// put these lines back in to get tracking in all 4 quadrants
-				setX(min(corners[0].getX(), corners[1].getX()));
-				setY(min(corners[0].getY(), corners[1].getY()));
+			onMouseDraggedProperty().set(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent m) {
+					double distx = m.getSceneX() - mousex;
+					double disty = m.getSceneY() - mousey;
+					
+					xLayout += distx;
+					yLayout += disty;
+					
+					setLayoutX(xLayout);
+					setLayoutY(yLayout);
+					
+					
+					mousex = m.getSceneX();
+					mousey = m.getSceneY();
+					
+					m.consume();
+				}
+			});
+			
+			onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
+				@Override
+				public void handle(MouseEvent m) {
+					// not really do anything...
+				}
 			});
 		}
 		
-		public double min(double x, double y) {
-			return (x < y) ? x : y;
+		public void mysetEndX(double x) {
+			line.setEndX(x);
+		}
+		
+		public void mysetEndY(double y) {
+			line.setEndY(y);
 		}
 	}
+	*/
 
-	
 }

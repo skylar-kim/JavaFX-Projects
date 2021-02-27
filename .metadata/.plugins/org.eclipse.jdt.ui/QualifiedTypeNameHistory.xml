@@ -13,7 +13,6 @@
     <fullyQualifiedTypeName name="javafx.scene.layout.GridPane"/>
     <fullyQualifiedTypeName name="javafx.scene.text.Font"/>
     <fullyQualifiedTypeName name="javafx.geometry.Insets"/>
-    <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
     <fullyQualifiedTypeName name="javafx.scene.input.KeyEvent"/>
     <fullyQualifiedTypeName name="javafx.scene.input.KeyCode"/>
     <fullyQualifiedTypeName name="java.util.Map"/>
@@ -25,9 +24,6 @@
     <fullyQualifiedTypeName name="javafx.scene.paint.Paint"/>
     <fullyQualifiedTypeName name="javafx.event.ActionEvent"/>
     <fullyQualifiedTypeName name="javafx.scene.layout.BorderPane"/>
-    <fullyQualifiedTypeName name="javafx.application.Application"/>
-    <fullyQualifiedTypeName name="javafx.scene.layout.Pane"/>
-    <fullyQualifiedTypeName name="javafx.scene.shape.Rectangle"/>
     <fullyQualifiedTypeName name="javafx.scene.Node"/>
     <fullyQualifiedTypeName name="javafx.event.EventHandler"/>
     <fullyQualifiedTypeName name="javafx.scene.shape.Circle"/>
@@ -35,6 +31,12 @@
     <fullyQualifiedTypeName name="mancala2021.Point"/>
     <fullyQualifiedTypeName name="mousing.Point"/>
     <fullyQualifiedTypeName name="java.awt.Label"/>
-    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
+    <fullyQualifiedTypeName name="javafx.application.Application"/>
+    <fullyQualifiedTypeName name="javafx.scene.layout.Pane"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Button"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.TextField"/>
     <fullyQualifiedTypeName name="javafx.scene.input.MouseEvent"/>
+    <fullyQualifiedTypeName name="javafx.scene.shape.Rectangle"/>
+    <fullyQualifiedTypeName name="javafx.scene.shape.Line"/>
+    <fullyQualifiedTypeName name="javafx.scene.control.Label"/>
 </qualifiedTypeNameHistroy>

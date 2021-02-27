@@ -79,7 +79,6 @@ public class MainUI extends Application {
 				drawRectangleBool = true;
 				//drawRectangle();
 				dr = new DraggableRectangle();
-				dr.drawRectangle();
 			});
 
 			lineB.setOnAction(e -> {
