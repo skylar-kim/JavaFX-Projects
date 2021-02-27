@@ -1,0 +1,94 @@
+package DemoLab;
+// NorthPole.java
+// 2018 Barrett Koster
+// mouse drag makes box , is visible while dragging 
+ 
+import java.util.LinkedList;
+import java.util.Random;
+
+//import Point;
+import javafx.application.Application;
+import javafx.event.*;
+import javafx.geometry.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.stage.*;
+import javafx.scene.input.*;
+import javafx.scene.shape.*;
+
+public class NorthDeer extends Application
+{
+	Pane root;
+    Deer theDeer; // the one you are dragging
+    LinkedList<Deer> deerList;
+   
+    boolean mouseIsPressed = false;
+    
+	public static void main( String[] args )
+	{ launch(args); }
+	
+    @Override
+    public void start(Stage stage)
+    {   
+        stage.setTitle("woods");
+        root = new Pane();
+        Scene scene = new Scene(root, 400, 400);
+	    stage.setScene(scene);
+	    stage.show();
+	    
+    	Random randy = new Random();
+    	deerList = new LinkedList<Deer>();
+        for ( int i=0; i<5; i++ )
+        {
+        	double x1 = 50+randy.nextInt(300);
+        	double y1 = 50+randy.nextInt(300);
+        	Deer d = new Deer( new Point(x1,y1) ) ;
+        	deerList.add( d );
+        	root.getChildren().add(d);
+        }
+    }
+    public double min( double x, double y)
+    {
+    	return (x<y)? x : y;
+    }
+
+    public class Deer extends Group
+    {
+       Rectangle r;
+       Circle c;
+       Point imAt; // screen coordinates
+       
+       public Deer( Point p )
+       {
+    	   putHere(p);
+    	   
+    	   r = new Rectangle(20,20);
+           getChildren().add(r);
+           c = new Circle( 15 );
+           getChildren().add(c);
+           c.setCenterX(30);
+
+           setOnMouseDragged(m->{ dr(m); });
+       }
+      
+       // The scene coords of m become the new position.
+       // (m.getX() gives delta from layoutX, so it's a small number if you
+       // are moving layout as you drag. But that would be another way to do it ...
+       // subtract the delta from current imAt and go with that.)
+       public void dr( MouseEvent m )
+       {
+    	   Point np = new Point( m.getSceneX(), m.getSceneY() );
+    	   putHere( np );
+       }
+       
+       public void putHere( Point m )
+       {
+    	   setLayoutX( m.getX() );
+    	   setLayoutY( m.getY() );
+    	   imAt = new Point( getLayoutX(), getLayoutY() );
+       }
+    }
+}
+
+

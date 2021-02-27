@@ -1,0 +1,162 @@
+package mancala2021;
+
+
+import java.util.LinkedList;
+
+import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.geometry.Insets;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+
+
+public class Mancala2021oo extends Application
+{
+	//Stone[] stoneArray;
+	GridPane root;
+	Pit[][] thePits; // Pit[2][7].  Pit[i][j] is ithe player (0-1) and jth Pit
+	                 // numbered from that player's left to right, Pit[i][6] is their store.
+	
+	// various dimensions
+	public static final double radius = 40; // radius of round part of pit
+	public static final double centers = 50; // pixels from edge of pane to pit center
+			
+   public static void main ( String[] args )
+   { launch(args); }
+   
+   public void start( Stage stage )
+   {
+	   stage.setTitle("Mancala 2021");
+	   root = new GridPane();
+	   Scene scene = new Scene(root);
+	   stage.setScene( scene );
+	   stage.show();
+	   stage.setOnCloseRequest( e->{Platform.exit(); System.exit(0); } );
+	   
+	   // construct all of the Pits (including the Stores)
+	   thePits = new Pit[2][7];
+	   for( int j=0; j<6; j++  )
+	   {
+		   root.add( thePits[0][j] = new Pit(0,j) , j+1, 1);
+		   root.add( thePits[1][j] = new Pit(1,j) , 6-j, 0 );
+	   }
+	   // stores at the end
+	   // last two parameteres are for the grid pane layout
+	   root.add( thePits[1][6] = new Store(1,6), 0,0,1,2 );
+	   root.add( thePits[0][6] = new Store(0,6), 7,0,1,2 );
+	   
+	   // stones are made AFTER all of the Pits so that they are on top
+	   for ( int j=0; j<6; j++ )
+	   {
+		   thePits[0][j].initStones();
+		   thePits[1][j].initStones();
+	   }
+   }
+   
+   public class Pit extends Pane
+   {
+	   LinkedList<Stone> stones;
+	   Color pitColor = new Color( .7, .6, .5, 1 );
+	   int myI, myJ; // this Pits place on the board
+	   
+	   public Pit( int i, int j )
+	   {
+		   myI = i; myJ = j;
+		   Label pitID = new Label();
+		   pitID.setText(""+myI+""+myJ);
+		   getChildren().add(pitID);
+		   setPastel();
+		   setPrefSize( 2*centers, 2*centers );
+		   Circle c = new Circle( centers, centers, radius );
+		   c.setFill( pitColor );
+		   getChildren().add(c);		   
+	   }
+	   
+	   // put 4 stones in each Pit 
+	   public void initStones()
+	   {
+		   stones = new LinkedList<Stone>();
+		   for ( int i=0; i<4; i++ )
+		   {
+			   Stone s = new Stone();
+			   stones.add(s);
+			   s.setPosition( i);
+			   getChildren().add(s);
+		   }
+	   }
+
+	    /**
+	     * sets this whole thing (background) to some pastel
+	     * *** no, make it TAN
+	     */
+	    public void setPastel()
+	    {
+			double red = 0.5 + 0.5 * Math.random();
+			double green = 0.5 + 0.5 * Math.random();
+			double blue = 0.5 + 0.5 * Math.random();
+			//Color color =  new Color(red,green,blue,1.0);
+			Color color = Color.TAN; // *************** make it all tan
+			setBackground(new Background(
+					new BackgroundFill( color, CornerRadii.EMPTY, Insets.EMPTY )
+					     )              );
+	    }
+   }
+   
+   public class Store extends Pit
+   {
+	   public Store ( int i, int j  )
+	   {
+		   super(i,j);
+		   
+		   // draw a long oval for this one (add rectangle and another circle)
+		   Circle c = new Circle( centers, 3*centers, radius );
+		   c.setFill(pitColor);
+		   getChildren().add(c);
+		   Rectangle r = new Rectangle( centers-radius, centers, 2*radius, 2*centers );
+		   r.setFill(pitColor);
+		   getChildren().add(r);
+
+	   }
+   }
+   
+   public class Stone extends Circle
+   {
+	   double stoneRadius = 4;
+	   double spacer = 2*stoneRadius + 1;
+	   int grouping = 5;
+	   double offset = 0.6;
+	   
+	   public Stone()
+	   {
+		   setRadius(stoneRadius);
+	   }
+	   
+	   // return a Point saying where the ith stone in a Pit belongs.
+	   // The coordinates are relative to a Pit.  
+	   public Point getPosition( int i )
+	   {
+		   Point p = new Point();
+		   p.setX( centers*offset + (i%grouping) * spacer );
+		   p.setY( centers*offset + (i/grouping) * spacer );
+		   return p;
+	   }
+	   
+	   // put this stone in the ith position.  Must be called from
+	   // a Pit, will set this stone relative to that Pit.
+	   public void setPosition(int i)
+	   {
+		   Point p = getPosition(i);
+		   setCenterX( p.getX() );
+		   setCenterY( p.getY() );
+	   }
+   }
+}
