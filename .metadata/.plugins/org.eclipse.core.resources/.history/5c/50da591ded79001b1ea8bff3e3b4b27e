@@ -47,7 +47,11 @@ public class DraggableRectangle extends GeneralShape {
 		double x1 = this.r.getX();
 		double y1 = this.r.getY();
 		double x2 = x1 + this.r.getWidth();
+		//double y2 = y1;
+		//double x3 = x1;
 		double y3 = y1 + this.r.getHeight();
+		//double x4 = x2;
+		//double y4 = y3;
 		
 		boolean isOnRect = false;
 		isOnRect = ((p.getX() >= x1 && p.getX() <= x2) && (p.getY() >= y1 && p.getY() <= y3));
@@ -73,8 +77,11 @@ public class DraggableRectangle extends GeneralShape {
 		if (bool) {
 			this.r.setStrokeType(StrokeType.OUTSIDE);
 			this.r.setStrokeWidth(5);
-			this.r.setStroke(Color.RED);
-			
+			if (this.r.getStroke() == Color.YELLOW) {
+				this.r.setStroke(Color.RED);
+			} else {
+				this.r.setStroke(Color.YELLOW);
+			}
 		} else {
 			this.r.setStrokeWidth(0);
 		}

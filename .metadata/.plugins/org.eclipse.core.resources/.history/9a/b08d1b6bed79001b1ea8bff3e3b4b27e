@@ -47,6 +47,7 @@ public class DraggableLine extends GeneralShape {
 	
 	@Override
 	void dragged(Point p, MouseEvent m) {
+//		// TODO Auto-generated method stub
 		double distAC = Math.hypot(this.l.getStartX() - m.getX(), this.l.getStartY() - m.getY());
 		double distBC = Math.hypot(this.l.getEndX() - m.getX(), this.l.getEndY() - m.getY());
 		
@@ -55,8 +56,12 @@ public class DraggableLine extends GeneralShape {
 		System.out.println("m.getX: " + m.getX());
 		System.out.println("m.getY: " + m.getY());
 		
-	
+//		
 		if (distAC < distBC) {
+//			double distx = m.getSceneX() - this.mouseX;
+//			double disty = m.getSceneY() - this.mouseY;
+//			this.l.setStartX(m.getX());
+//			this.l.setStartX(m.getY());
 			this.l.setStartX(m.getX());
 			this.l.setStartY(m.getY());
 			System.out.println("Line's start x: " + this.l.getStartX());
@@ -65,6 +70,10 @@ public class DraggableLine extends GeneralShape {
 			System.out.println("Line's end y: " + this.l.getEndY());
 		}
 		else if (distAC > distBC) {
+//			double distx = m.getSceneX() - this.mouseX;
+//			double disty = m.getSceneY() - this.mouseY;
+//			this.l.setEndX(distx);
+//			this.l.setEndX(disty);
 			this.l.setEndX(m.getX());
 			this.l.setEndY(m.getY());
 			System.out.println("Line's start x: " + this.l.getStartX());

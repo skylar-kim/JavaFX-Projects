@@ -211,12 +211,9 @@ public class MainUI extends Application {
 					Point p = new Point(m);
 					theItem = findItem(p);
 					deleteIndex = findItemIndex(p);
-					if (theItem != null) {
-						theItem.setMouseX(p.getX());
-						theItem.setMouseY(p.getY());
-						theItem.setHighlight(true);
-					}
-					
+					theItem.setMouseX(p.getX());
+					theItem.setMouseY(p.getY());
+					theItem.setHighlight(true);
 					mouseIsPressed = true;
 				} 
 			});

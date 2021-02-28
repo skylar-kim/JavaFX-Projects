@@ -47,31 +47,29 @@ public class DraggableLine extends GeneralShape {
 	
 	@Override
 	void dragged(Point p, MouseEvent m) {
+//		// TODO Auto-generated method stub
 		double distAC = Math.hypot(this.l.getStartX() - m.getX(), this.l.getStartY() - m.getY());
 		double distBC = Math.hypot(this.l.getEndX() - m.getX(), this.l.getEndY() - m.getY());
-		
-		System.out.println("distAC: " + distAC);
-		System.out.println("distBC: " + distBC);
-		System.out.println("m.getX: " + m.getX());
-		System.out.println("m.getY: " + m.getY());
-		
-	
-		if (distAC < distBC) {
-			this.l.setStartX(m.getX());
-			this.l.setStartY(m.getY());
-			System.out.println("Line's start x: " + this.l.getStartX());
-			System.out.println("Line's start Y: " + this.l.getStartY());
-			System.out.println("Line's end x: " + this.l.getEndX());
-			System.out.println("Line's end y: " + this.l.getEndY());
-		}
-		else if (distAC > distBC) {
-			this.l.setEndX(m.getX());
-			this.l.setEndY(m.getY());
-			System.out.println("Line's start x: " + this.l.getStartX());
-			System.out.println("Line's start Y: " + this.l.getStartY());
-			System.out.println("Line's end x: " + this.l.getEndX());
-			System.out.println("Line's end y: " + this.l.getEndY());
-		}
+//		
+//		System.out.println("distAC: " + distAC);
+//		System.out.println("distBC: " + distBC);
+//		
+//		if (distAC < distBC) {
+//			double distx = m.getSceneX() - this.mouseX;;
+//			double disty = m.getSceneY() - this.mouseY;;
+//			this.l.setStartX(distx);
+//			this.l.setStartX(disty);
+////			this.l.setStartX(m.getX());
+////			this.l.setStartY(m.getY());
+//		}
+//		else if (distAC > distBC) {
+//			double distx = m.getSceneX() - this.mouseX;;
+//			double disty = m.getSceneY() - this.mouseY;;
+//			this.l.setEndX(distx);
+//			this.l.setEndX(disty);
+////			this.l.setEndX(m.getX());
+////			this.l.setEndX(m.getY());
+//		}
 		
 		
 		

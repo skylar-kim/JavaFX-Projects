@@ -12,7 +12,6 @@ public class DraggableRectangle extends GeneralShape {
 	Rectangle r;
 	Point imAt;
 	Label label;
-	Color color = Color.BLACK;
 	private double x = 0;
 	private double y = 0;
 	private double mousex = 0;
@@ -37,7 +36,6 @@ public class DraggableRectangle extends GeneralShape {
 	void setColor(Color c) {
 		// TODO Auto-generated method stub
 		this.r.setFill(c);
-		this.color = c;
 
 	}
 
@@ -47,7 +45,11 @@ public class DraggableRectangle extends GeneralShape {
 		double x1 = this.r.getX();
 		double y1 = this.r.getY();
 		double x2 = x1 + this.r.getWidth();
+		//double y2 = y1;
+		//double x3 = x1;
 		double y3 = y1 + this.r.getHeight();
+		//double x4 = x2;
+		//double y4 = y3;
 		
 		boolean isOnRect = false;
 		isOnRect = ((p.getX() >= x1 && p.getX() <= x2) && (p.getY() >= y1 && p.getY() <= y3));
@@ -60,8 +62,9 @@ public class DraggableRectangle extends GeneralShape {
 		// TODO Auto-generated method stub
 		double distx = m.getSceneX() - this.mouseX;
 		double disty = m.getSceneY() - this.mouseY;
-		setLayoutX(distx);
-		setLayoutY(disty);
+		this.r.setLayoutX(distx);
+		this.r.setLayoutY(disty);
+		this.label.relocate((this.r.getX() + this.r.getWidth()/2) - label.getText().length()*2, (this.r.getY() + this.r.getHeight()/2));
 		imAt = p;
 		System.out.println("imAt x: " + imAt.getX());
 		System.out.println("imAt Y: " + imAt.getY());
@@ -73,9 +76,14 @@ public class DraggableRectangle extends GeneralShape {
 		if (bool) {
 			this.r.setStrokeType(StrokeType.OUTSIDE);
 			this.r.setStrokeWidth(5);
-			this.r.setStroke(Color.RED);
-			
+			if (this.r.getStroke() == Color.YELLOW) {
+				this.r.setStroke(Color.RED);
+			} else {
+				this.r.setStroke(Color.YELLOW);
+			}
 		} else {
+//			this.r.setStrokeType(StrokeType.CENTERED);
+//			this.r.setStroke(Color.BLACK);
 			this.r.setStrokeWidth(0);
 		}
 		
