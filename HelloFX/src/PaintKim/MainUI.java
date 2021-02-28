@@ -19,11 +19,10 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
-
 public class MainUI extends Application {
 
 	Pane root;
-	
+
 	// Rectangle Stuff
 	Point[] corners = new Point[2];
 	Rectangle r;
@@ -34,7 +33,7 @@ public class MainUI extends Application {
 	// Line Stuff
 	Line l;
 	DraggableLine dl;
-	
+
 	// MyLine l;
 	boolean mouseIsPressedLine = false;
 	boolean drawLineBool = false;
@@ -42,22 +41,25 @@ public class MainUI extends Application {
 	// Text Stuff
 	Label label;
 	boolean putTextBool = false;
-	
+
 	Rectangle theRectangle;
 	DraggableRectangle theDR;
 	boolean mouseIsPressed = false;
-	
+
 	DraggableLine theLine;
-	
-	
+
 	List<GeneralShape> itemList;
 	GeneralShape theItem;
 	
+	int deleteIndex = -1;
+
 	// MODES
-	enum Mode {RECT, LINE, SELECT, DELETE}
-	
+	enum Mode {
+		RECT, LINE, SELECT, DELETE
+	}
+
 	Mode currentMode;
-	
+
 	public static void main(String[] args) {
 		launch(args);
 	}
@@ -69,41 +71,49 @@ public class MainUI extends Application {
 		Scene scene = new Scene(root, 900, 700);
 		stage.setScene(scene);
 		stage.show();
-		
-		//rectangleList = new ArrayList<Rectangle>();
-		
+
+		// rectangleList = new ArrayList<Rectangle>();
+
 		itemList = new ArrayList<GeneralShape>();
 		PaintMenu paintMenu = new PaintMenu();
 
 		root.getChildren().add(paintMenu);
 		/*
-		root.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
-			Point p = new Point(m.getX(), m.getY());
-			theItem = findItem(p);
-			mouseIsPressed = true;
-		});
-		
-		root.addEventHandler(MouseEvent.MOUSE_RELEASED, (MouseEvent m) -> {
-			mouseIsPressed = false;
-		});
-		
-		root.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent m)-> {
-			Point p = new Point(m.getX(), m.getY());
-			if(theItem!=null) {theItem.dragged(p); }
-		});
-		*/
+		 * root.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> { Point p =
+		 * new Point(m.getX(), m.getY()); theItem = findItem(p); mouseIsPressed = true;
+		 * });
+		 * 
+		 * root.addEventHandler(MouseEvent.MOUSE_RELEASED, (MouseEvent m) -> {
+		 * mouseIsPressed = false; });
+		 * 
+		 * root.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent m)-> { Point p =
+		 * new Point(m.getX(), m.getY()); if(theItem!=null) {theItem.dragged(p); } });
+		 */
 	}
-	
+
 	public GeneralShape findItem(Point p) {
 		GeneralShape found = null;
 		for (GeneralShape gs : itemList) {
 			if (gs.zatYou(p)) {
 				found = gs;
 			}
+			gs.setHighlight(false);
 		}
 		return found;
 	}
 	
+	public int findItemIndex(Point p) {
+		int index = -1;
+		for (int i = 0; i < itemList.size(); i++) {
+			System.out.println("find index: " + i);
+			if (itemList.get(i).zatYou(p)) {
+				System.out.println("zat you return true: " + i);
+				index = i;
+				break;
+			}
+		}
+		return index;
+	}
 
 	public class PaintMenu extends VBox {
 		Button rectangleB;
@@ -129,7 +139,7 @@ public class MainUI extends Application {
 
 			rectangleB.setOnAction(e -> {
 				System.out.println("Rectangle Button Pressed");
-				
+
 				currentMode = Mode.RECT;
 			});
 
@@ -138,36 +148,74 @@ public class MainUI extends Application {
 
 				currentMode = Mode.LINE;
 			});
-
+			
+//			public void putText() {
+//				System.out.println("Putting text on screen.");
+//
+//				String textFieldInput = textField.getText();
+//				System.out.println("Text Field Input: " + textFieldInput);
+//
+//				label = new Label(textFieldInput);
+//				double randX = Math.random() * 800;
+//				double randY = Math.random() * 800;
+//				System.out.println("randx: " + randX + " randy: " + randY);
+//				label.relocate(randX, randY);
+//				// label.setText(textFieldInput);
+//
+//				root.getChildren().add(label);
+//
+//			}
 			puttextB.setOnAction(e -> {
 				System.out.println("Put Text Button Pressed");
 
-				putText();
+				//putText();
+				if (theItem != null && theItem instanceof DraggableRectangle) {
+					System.out.println("Put Text on DraggableRectangle");
+					
+					String textFieldInput = textField.getText();
+					System.out.println("Text Field Input: " + textFieldInput);
+					theItem.addTextLabel(textFieldInput);
+				}
 			});
-			
+
 			selectB.setOnAction(e -> {
 				System.out.println("Select Button Pressed");
 
 				currentMode = Mode.SELECT;
 			});
 			
+			deleteB.setOnAction(e -> {
+				System.out.println("Delete Button Pressed");
+				currentMode = Mode.DELETE;
+				
+				if (deleteIndex > -1) {
+					System.out.println("Shape chosen to be deleted: " + deleteIndex);
+					root.getChildren().remove(theItem);
+					itemList.remove(deleteIndex);
+					deleteIndex = -1;
+					
+				} else {
+					System.out.println("No shape chosen to be deleted");
+				}
+			});
+
 			cpB.setOnAction(e -> {
 				System.out.println("Color Picker Clicked");
 				Color c = cpB.getValue();
 				if (theItem != null) {
 					System.out.println("Shape was chosen");
 					theItem.setColor(c);
-					
+
 				} else {
 					System.out.println("Shape was not chosen :(");
 				}
 			});
-			
+
 			paintAction();
 
 			getChildren().addAll(rectangleB, lineB, selectB, deleteB, puttextB, textField, cpB, loadB, saveB);
 		}
-		
+
 		public void paintAction() {
 			root.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> {
 				if (currentMode == Mode.RECT) {
@@ -178,25 +226,22 @@ public class MainUI extends Application {
 					itemList.add(dr);
 					root.getChildren().add(dr);
 					mouseIsPressed = true;
-				}
-				else if (currentMode == Mode.LINE) {
-//					l = new Line(m.getX(), m.getY(), m.getX(), m.getY());
-//					root.getChildren().add(l);
-					//lineList.add(l);
+				} else if (currentMode == Mode.LINE) {
 					dl = new DraggableLine(m.getX(), m.getY(), m.getX(), m.getY());
 					root.getChildren().add(dl);
 					itemList.add(dl);
 					mouseIsPressed = true;
-				}
-				else if (currentMode == Mode.SELECT) {
+				} else if (currentMode == Mode.SELECT) {
 					Point p = new Point(m);
 					theItem = findItem(p);
+					deleteIndex = findItemIndex(p);
 					theItem.setMouseX(p.getX());
 					theItem.setMouseY(p.getY());
+					theItem.setHighlight(true);
 					mouseIsPressed = true;
-				}
+				} 
 			});
-			
+
 			root.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent m) -> {
 				if (currentMode == Mode.RECT) {
 					corners[1] = new Point(m);
@@ -207,57 +252,44 @@ public class MainUI extends Application {
 					// put these lines back in to get tracking in all 4 quadrants
 					dr.getRectangle().setX(min(corners[0].getX(), corners[1].getX()));
 					dr.getRectangle().setY(min(corners[0].getY(), corners[1].getY()));
-				}
-				else if (currentMode == Mode.LINE) {
+				} else if (currentMode == Mode.LINE) {
 //					l.setEndX(m.getX());
 //					l.setEndY(m.getY());
 					dl.getLine().setEndX(m.getX());
 					dl.getLine().setEndY(m.getY());
-				}
-				else if (currentMode == Mode.SELECT) {
-					Point p = new Point (m);
+				} else if (currentMode == Mode.SELECT) {
+					Point p = new Point(m);
 					if (theItem != null) {
 						theItem.dragged(p, m);
 					}
 				}
 			});
-			
-			root.addEventHandler
-	        (  MouseEvent.MOUSE_RELEASED,
-	           (MouseEvent m) ->
-	           {
-	               mouseIsPressed = false;
-	           }
-	        );
+
+			root.addEventHandler(MouseEvent.MOUSE_RELEASED, (MouseEvent m) -> {
+				mouseIsPressed = false;
+			});
 		}
-		
+
 		public double min(double x, double y) {
 			return (x < y) ? x : y;
 		}
 
-		
-		
 		public void putText() {
-			if (putTextBool) {
-				System.out.println("Putting text on screen.");
+			System.out.println("Putting text on screen.");
 
-				String textFieldInput = textField.getText();
-				System.out.println("Text Field Input: " + textFieldInput);
+			String textFieldInput = textField.getText();
+			System.out.println("Text Field Input: " + textFieldInput);
 
-				label = new Label(textFieldInput);
-				double randX = Math.random() * 800;
-				double randY = Math.random() * 800;
-				System.out.println("randx: " + randX + " randy: " + randY);
-				label.relocate(randX, randY);
-				// label.setText(textFieldInput);
+			label = new Label(textFieldInput);
+			double randX = Math.random() * 800;
+			double randY = Math.random() * 800;
+			System.out.println("randx: " + randX + " randy: " + randY);
+			label.relocate(randX, randY);
+			// label.setText(textFieldInput);
 
-				root.getChildren().add(label);
+			root.getChildren().add(label);
 
-			}
 		}
-		
-		
 
-	
 	}
 }

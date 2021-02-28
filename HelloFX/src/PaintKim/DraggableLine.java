@@ -4,17 +4,19 @@ import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import javafx.scene.shape.StrokeType;
 
 public class DraggableLine extends GeneralShape {
 	Line l;
 	Point imAt;
+	Color color;
 	private double x = 0;
 	private double y = 0;
 	
 	
 	public DraggableLine(double xStart, double yStart, double xEnd, double yEnd) {
 		l = new Line(xStart, yStart, xEnd, yEnd);
-		
+		color = Color.BLACK;
 		getChildren().add(l);
 	}
 	
@@ -40,12 +42,26 @@ public class DraggableLine extends GeneralShape {
 	@Override
 	void setColor(Color c) {
 		// TODO Auto-generated method stub
-		this.l.setStroke(c);
+		color = c;
+		this.l.setStroke(color);
 	}
 
 	@Override
-	void setSelected(boolean bool) {
+	void setHighlight(boolean bool) {
 		// TODO Auto-generated method stub
+		if (bool) {
+			this.l.setStrokeType(StrokeType.OUTSIDE);
+			this.l.setStrokeWidth(2);
+			if (this.l.getStroke() == Color.YELLOW) {
+				this.l.setStroke(Color.RED);
+			} else {
+				this.l.setStroke(Color.YELLOW);
+			}
+		} else {
+			this.l.setStrokeType(StrokeType.CENTERED);
+			this.l.setStroke(color);
+			this.l.setStrokeWidth(1);
+		}
 		
 	}
 

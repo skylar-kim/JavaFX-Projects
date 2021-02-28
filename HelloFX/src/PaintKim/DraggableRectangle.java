@@ -1,14 +1,17 @@
 package PaintKim;
 
 import javafx.event.EventHandler;
+import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeType;
 
 
 public class DraggableRectangle extends GeneralShape {
 	Rectangle r;
 	Point imAt;
+	Label label;
 	private double x = 0;
 	private double y = 0;
 	private double mousex = 0;
@@ -16,13 +19,19 @@ public class DraggableRectangle extends GeneralShape {
 
 	public DraggableRectangle(double xCoord, double yCoord) {
 		r = new Rectangle(xCoord, yCoord);
+		r.setX(0);
 		getChildren().add(r);
 	}
 
 	public Rectangle getRectangle() {
 		return this.r;
 	}
-
+	
+	public void addTextLabel(String text) {
+		label = new Label(text);
+		label.relocate((this.r.getX() + this.r.getWidth()/2) - text.length()*2, (this.r.getY() + this.r.getHeight()/2));
+		getChildren().add(label);
+	}
 
 	@Override
 	void setColor(Color c) {
@@ -62,8 +71,21 @@ public class DraggableRectangle extends GeneralShape {
 	}
 
 	@Override
-	void setSelected(boolean bool) {
+	void setHighlight(boolean bool) {
 		// TODO Auto-generated method stub
+		if (bool) {
+			this.r.setStrokeType(StrokeType.OUTSIDE);
+			this.r.setStrokeWidth(5);
+			if (this.r.getStroke() == Color.YELLOW) {
+				this.r.setStroke(Color.RED);
+			} else {
+				this.r.setStroke(Color.YELLOW);
+			}
+		} else {
+//			this.r.setStrokeType(StrokeType.CENTERED);
+//			this.r.setStroke(Color.BLACK);
+			this.r.setStrokeWidth(0);
+		}
 		
 	}
 
