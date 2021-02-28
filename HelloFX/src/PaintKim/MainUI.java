@@ -1,10 +1,14 @@
 package PaintKim;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
@@ -14,9 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Line;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.shape.Shape;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 public class MainUI extends Application {
@@ -25,28 +27,28 @@ public class MainUI extends Application {
 
 	// Rectangle Stuff
 	Point[] corners = new Point[2];
-	Rectangle r;
+	//Rectangle r;
 	DraggableRectangle dr;
-	boolean mouseIsPressedRect = false;
-	boolean drawRectangleBool = false;
+	//boolean mouseIsPressedRect = false;
+	//boolean drawRectangleBool = false;
 
 	// Line Stuff
-	Line l;
+	//Line l;
 	DraggableLine dl;
 
 	// MyLine l;
-	boolean mouseIsPressedLine = false;
-	boolean drawLineBool = false;
+	//boolean mouseIsPressedLine = false;
+	//boolean drawLineBool = false;
 
 	// Text Stuff
 	Label label;
-	boolean putTextBool = false;
+	//boolean putTextBool = false;
 
-	Rectangle theRectangle;
-	DraggableRectangle theDR;
+	//Rectangle theRectangle;
+	//DraggableRectangle theDR;
 	boolean mouseIsPressed = false;
 
-	DraggableLine theLine;
+	//DraggableLine theLine;
 
 	List<GeneralShape> itemList;
 	GeneralShape theItem;
@@ -57,6 +59,12 @@ public class MainUI extends Application {
 	enum Mode {
 		RECT, LINE, SELECT, DELETE
 	}
+	
+	// For saving
+	List<String> savedItems;
+	FileChooser fc;
+	
+	Stage theStage;
 
 	Mode currentMode;
 
@@ -71,10 +79,11 @@ public class MainUI extends Application {
 		Scene scene = new Scene(root, 900, 700);
 		stage.setScene(scene);
 		stage.show();
-
-		// rectangleList = new ArrayList<Rectangle>();
+		theStage = stage;
 
 		itemList = new ArrayList<GeneralShape>();
+		savedItems = new ArrayList<String>();
+		fc = new FileChooser();
 		PaintMenu paintMenu = new PaintMenu();
 
 		root.getChildren().add(paintMenu);
@@ -128,22 +137,15 @@ public class MainUI extends Application {
 			saveB = new Button("Save");
 
 			rectangleB.setOnAction(e -> {
-				System.out.println("Rectangle Button Pressed");
-
 				currentMode = Mode.RECT;
 			});
 
 			lineB.setOnAction(e -> {
-				System.out.println("Line Button Pressed");
-
 				currentMode = Mode.LINE;
 			});
 			
 
 			puttextB.setOnAction(e -> {
-				System.out.println("Put Text Button Pressed");
-
-				//putText();
 				if (theItem != null && theItem instanceof DraggableRectangle) {
 					System.out.println("Put Text on DraggableRectangle");
 					
@@ -154,13 +156,10 @@ public class MainUI extends Application {
 			});
 
 			selectB.setOnAction(e -> {
-				System.out.println("Select Button Pressed");
-
 				currentMode = Mode.SELECT;
 			});
 			
 			deleteB.setOnAction(e -> {
-				System.out.println("Delete Button Pressed");
 				currentMode = Mode.DELETE;
 				
 				if (deleteIndex > -1) {
@@ -175,7 +174,6 @@ public class MainUI extends Application {
 			});
 
 			cpB.setOnAction(e -> {
-				System.out.println("Color Picker Clicked");
 				Color c = cpB.getValue();
 				if (theItem != null) {
 					System.out.println("Shape was chosen");
@@ -185,6 +183,25 @@ public class MainUI extends Application {
 					System.out.println("Shape was not chosen :(");
 				}
 			});
+			
+			loadB.setOnAction(e -> {
+				File file = fc.showOpenDialog(theStage);
+				if (file != null) {
+					loadFile(file);
+				}
+			});
+			
+			saveB.setOnAction(e -> {
+				for (GeneralShape gs: itemList) {
+					String convertedItem = gs.convertToString();
+					savedItems.add(convertedItem);
+					System.out.println(convertedItem);
+				}
+				
+				saveFile(savedItems);
+			});
+			
+			
 
 			paintAction();
 
@@ -232,8 +249,6 @@ public class MainUI extends Application {
 					dr.getRectangle().setX(min(corners[0].getX(), corners[1].getX()));
 					dr.getRectangle().setY(min(corners[0].getY(), corners[1].getY()));
 				} else if (currentMode == Mode.LINE) {
-//					l.setEndX(m.getX());
-//					l.setEndY(m.getY());
 					dl.getLine().setEndX(m.getX());
 					dl.getLine().setEndY(m.getY());
 					dl.setOrigCoordEnd(m.getX(), m.getY());
@@ -266,10 +281,96 @@ public class MainUI extends Application {
 			double randY = Math.random() * 800;
 			System.out.println("randx: " + randX + " randy: " + randY);
 			label.relocate(randX, randY);
-			// label.setText(textFieldInput);
 
 			root.getChildren().add(label);
 
+		}
+		
+		public void saveFile(List<String> savedItems) {
+			try {
+				FileWriter fw = new FileWriter("out.txt");
+				
+				for (int i = 0; i < savedItems.size(); i++) {
+					fw.write(savedItems.get(i));
+				}
+				
+				fw.close();
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		public void loadFile(File file) {
+			try {
+				Scanner scanner = new Scanner(file);
+				
+				while (scanner.hasNext()) {
+					String line = scanner.nextLine();
+					System.out.println(line);
+					
+					String[] delimitedString = line.split(" ");
+					loadShapes(delimitedString);
+					
+				}
+				scanner.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		public void loadShapes(String[] delimString) {
+			
+			System.out.println(delimString[0]);
+			if (delimString[0].equals("line")) {
+				try {
+					System.out.println("Making draggable line");
+					dl = new DraggableLine(
+							Double.parseDouble(delimString[1]), 
+							Double.parseDouble(delimString[2]), 
+							Double.parseDouble(delimString[3]), 
+							Double.parseDouble(delimString[4]),
+							Double.parseDouble(delimString[5]),
+							Double.parseDouble(delimString[6]),
+							Double.parseDouble(delimString[7]));
+					
+					root.getChildren().add(dl);
+					itemList.add(dl);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			else if (delimString[0].equals("box")) {
+				System.out.println("Making draggable box");
+				double x = Double.parseDouble(delimString[1]);
+				double y = Double.parseDouble(delimString[2]);
+				double width = Double.parseDouble(delimString[3]);
+				double height = Double.parseDouble(delimString[4]);
+				double red = Double.parseDouble(delimString[5]);
+				double green = Double.parseDouble(delimString[6]);
+				double blue = Double.parseDouble(delimString[7]);
+				if (delimString.length == 8) {
+					dr = new DraggableRectangle(x,y,width,height,red,green,blue);
+					root.getChildren().add(dr);
+					itemList.add(dr);
+				} else if (delimString.length > 8) {
+					StringBuilder sb = new StringBuilder();
+					for (int i = 8; i < delimString.length; i++) {
+						sb.append(delimString[i]);
+					}
+					String text = sb.toString();
+					
+					dr = new DraggableRectangle(x,y,width,height,red,green,blue,text);
+					root.getChildren().add(dr);
+					itemList.add(dr);
+					
+				}
+				
+			} 
 		}
 
 	}

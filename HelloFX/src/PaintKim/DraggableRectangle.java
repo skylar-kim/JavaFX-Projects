@@ -1,6 +1,5 @@
 package PaintKim;
 
-import javafx.event.EventHandler;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -21,6 +20,30 @@ public class DraggableRectangle extends GeneralShape {
 	public DraggableRectangle(double xCoord, double yCoord) {
 		r = new Rectangle(xCoord, yCoord);
 		getChildren().add(r);
+	}
+	
+	public DraggableRectangle(double xCoord, double yCoord, double width, double height, double red, double green, double blue) {
+		r = new Rectangle(xCoord, yCoord);
+		this.r.setX(xCoord);
+		this.r.setY(yCoord);
+		r.setWidth(width);
+		r.setHeight(height);
+		color = new Color(red, green, blue, 1.0);
+		setColor(color);
+		getChildren().add(r);
+	}
+	
+	
+	public DraggableRectangle(double xCoord, double yCoord, double width, double height, double red, double green, double blue, String text) {
+		r = new Rectangle(xCoord, yCoord);
+		this.r.setX(xCoord);
+		this.r.setY(yCoord);
+		r.setWidth(width);
+		r.setHeight(height);
+		color = new Color(red, green, blue, 1.0);
+		setColor(color);
+		getChildren().add(r);
+		addTextLabel(text);
 	}
 
 	public Rectangle getRectangle() {
@@ -93,9 +116,23 @@ public class DraggableRectangle extends GeneralShape {
 		this.mouseY = y;
 	}
 	
-	String convertToString() {
+	@Override
+	public String convertToString() {
 		// TODO Auto-generated method stub
 		StringBuilder sb = new StringBuilder();
+		
+		sb.append("box ");
+		sb.append(this.r.getX() + " ");
+		sb.append(this.r.getY() + " ");
+		sb.append(this.r.getWidth() + " ");
+		sb.append(this.r.getHeight() + " ");
+		sb.append(this.color.getRed() + " ");
+		sb.append(this.color.getGreen() + " ");
+		sb.append(this.color.getBlue() + " ");
+		if (this.label != null) {
+			sb.append(this.label.getText());
+		};
+		sb.append("\n");
 		
 		String result = sb.toString();
 		return result;

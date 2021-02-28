@@ -19,5 +19,6 @@ public abstract class GeneralShape extends Group {
 		
 	}
 //	abstract String convertToString();
+	public abstract String convertToString();
 	
 }
