@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename compilation unit &apos;PaintKim.DraggedRectangle.java&apos; to &apos;DraggableRectangle.java&apos;&#x0A;- Original project: &apos;HelloFX&apos;&#x0A;- Original element: &apos;PaintKim.DraggedRectangle.java&apos;&#x0A;- Renamed element: &apos;PaintKim.DraggableRectangle.java&apos;" description="Rename compilation unit &apos;DraggedRectangle.java&apos;" flags="2" id="org.eclipse.jdt.ui.rename.compilationunit" input="/src&lt;PaintKim{DraggedRectangle.java" name="DraggableRectangle.java" references="false" stamp="1614471670343" version="1.0"/>
+</session>

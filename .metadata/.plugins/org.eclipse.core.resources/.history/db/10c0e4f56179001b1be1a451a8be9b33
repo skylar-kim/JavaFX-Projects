@@ -160,7 +160,6 @@ public class MainUI extends Application {
 //				
 //				select();
 			});
-			paintAction();
 
 			getChildren().addAll(rectangleB, lineB, selectB, deleteB, puttextB, textField, loadB, saveB);
 		}

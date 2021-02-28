@@ -1,0 +1,30 @@
+package PaintKim;
+
+import javafx.scene.shape.Rectangle;
+import mousing.Point;
+
+public class DraggableRectangle extends Rectangle{
+	Point imAt;
+	
+	public DraggableRectangle(double x, double y) {
+		super(x, y);
+		
+	}
+	
+	public void dragged( Point p )
+    {
+ 	   setLayoutX( p.getX() );
+ 	   setLayoutY( p.getY() );
+ 	   imAt = p;
+    }
+	
+	public boolean zatYou( Point m )
+    {
+    	System.out.println("zatYou x="+m.getX()+" y="+m.getY());
+    	double d = Math.abs(m.getX()-imAt.getX())
+    			  +Math.abs(m.getY()-imAt.getY());
+    	boolean ret = (d<50);
+    	System.out.println("zatYou ret="+ret);
+    	return ret;
+    }
+}

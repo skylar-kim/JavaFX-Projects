@@ -1,0 +1,11 @@
+package PaintKim;
+
+import javafx.scene.shape.Rectangle;
+
+public class DraggableRectangle extends Rectangle{
+	
+	public DraggableRectangle(double x, double y) {
+		super(x, y);
+		
+	}
+}
