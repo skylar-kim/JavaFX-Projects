@@ -153,14 +153,6 @@ public class MainUI extends Application {
 			
 			cpB.setOnAction(e -> {
 				System.out.println("Color Picker Clicked");
-				Color c = cpB.getValue();
-				if (theItem != null) {
-					System.out.println("Shape was chosen");
-					theItem.setColor(c);
-					
-				} else {
-					System.out.println("Shape was not chosen :(");
-				}
 			});
 			
 			paintAction();

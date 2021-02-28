@@ -13,7 +13,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
@@ -112,7 +111,7 @@ public class MainUI extends Application {
 		Button deleteB;
 		Button puttextB;
 		TextField textField;
-		ColorPicker cpB;
+		ColorPicker cp;
 		Button loadB;
 		Button saveB;
 
@@ -123,7 +122,7 @@ public class MainUI extends Application {
 			deleteB = new Button("Delete");
 			puttextB = new Button("Put Text");
 			textField = new TextField("Start writing");
-			cpB = new ColorPicker(Color.BLUE);
+			cp = new ColorPicker();
 			loadB = new Button("Load File");
 			saveB = new Button("Save");
 
@@ -151,21 +150,9 @@ public class MainUI extends Application {
 				currentMode = Mode.SELECT;
 			});
 			
-			cpB.setOnAction(e -> {
-				System.out.println("Color Picker Clicked");
-				Color c = cpB.getValue();
-				if (theItem != null) {
-					System.out.println("Shape was chosen");
-					theItem.setColor(c);
-					
-				} else {
-					System.out.println("Shape was not chosen :(");
-				}
-			});
-			
 			paintAction();
 
-			getChildren().addAll(rectangleB, lineB, selectB, deleteB, puttextB, textField, cpB, loadB, saveB);
+			getChildren().addAll(rectangleB, lineB, selectB, deleteB, puttextB, textField, loadB, saveB);
 		}
 		
 		public void paintAction() {

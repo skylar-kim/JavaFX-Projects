@@ -27,7 +27,7 @@ public class DraggableRectangle extends GeneralShape {
 	@Override
 	void setColor(Color c) {
 		// TODO Auto-generated method stub
-		this.r.setFill(c);
+		
 
 	}
 
