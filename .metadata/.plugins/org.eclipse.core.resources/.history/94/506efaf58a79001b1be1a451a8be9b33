@@ -12,10 +12,6 @@ public class DraggableLine extends GeneralShape {
 	Color color;
 	private double x = 0;
 	private double y = 0;
-	private double origStartX;
-	private double origStartY;
-	private double origEndX;
-	private double origEndY;
 	
 	
 	public DraggableLine(double xStart, double yStart, double xEnd, double yEnd) {
@@ -41,15 +37,6 @@ public class DraggableLine extends GeneralShape {
 		
      	System.out.println("zatYou ret="+isOnLine);
      	return isOnLine; 
-	}
-	
-	public void setOrigCoordStart(double x1, double y1) {
-		origStartX = x1;
-		origStartY = y1;
-	}
-	public void setOrigCoordEnd(double x2, double y2) {
-		origEndX = x2;
-		origEndY = y2;
 	}
 
 	@Override
@@ -80,31 +67,12 @@ public class DraggableLine extends GeneralShape {
 
 	@Override
 	void dragged(Point p, MouseEvent m) {
-//		// TODO Auto-generated method stub
-//		double distAC = Math.hypot(origStartX - m.getX(), origStartY - m.getY());
-//		double distBC = Math.hypot(origEndX - this.mouseX, origEndY - this.mouseY);
-//		
-//		System.out.println("distAC: " + distAC);
-//		System.out.println("distBC: " + distBC);
-//		
-//		if (distAC < distBC) {
-//			double distx = m.getSceneX() - this.mouseX;;
-//			double disty = m.getSceneY() - this.mouseY;;
-//			this.l.setStartX(distx);
-//			this.l.setStartX(disty);
-////			this.l.setStartX(m.getX());
-////			this.l.setStartY(m.getY());
-//		}
-//		else if (distAC > distBC) {
-//			double distx = m.getSceneX() - this.mouseX;;
-//			double disty = m.getSceneY() - this.mouseY;;
-//			this.l.setEndX(distx);
-//			this.l.setEndX(disty);
-////			this.l.setEndX(m.getX());
-////			this.l.setEndX(m.getY());
-//		}
+		// TODO Auto-generated method stub
+		double distAC = Math.hypot(this.l.getStartX() - this.mouseX, this.l.getStartY() - this.mouseY);
+		double distBC = Math.hypot(this.l.getEndX() - this.mouseX, this.l.getEndY() - this.mouseY);
 		
-		
+		System.out.println("distAC: " + distAC);
+		System.out.println("distAC: " + distBC);
 		
 	}
 
@@ -118,17 +86,6 @@ public class DraggableLine extends GeneralShape {
 	void setMouseY(double y) {
 		// TODO Auto-generated method stub
 		this.mouseY = y;
-	}
-
-	String convertToString() {
-		// TODO Auto-generated method stub
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("box ");
-		
-		
-		String result = sb.toString();
-		return result;
 	}
 	
 }

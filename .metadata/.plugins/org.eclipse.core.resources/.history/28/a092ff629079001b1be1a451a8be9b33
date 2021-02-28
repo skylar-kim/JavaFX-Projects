@@ -18,6 +18,5 @@ public abstract class GeneralShape extends Group {
 		// TODO Auto-generated method stub
 		
 	}
-//	abstract String convertToString();
 	
 }

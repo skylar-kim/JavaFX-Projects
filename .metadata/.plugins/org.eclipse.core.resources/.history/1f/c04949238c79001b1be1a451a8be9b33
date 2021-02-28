@@ -78,7 +78,17 @@ public class MainUI extends Application {
 		PaintMenu paintMenu = new PaintMenu();
 
 		root.getChildren().add(paintMenu);
-		
+		/*
+		 * root.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> { Point p =
+		 * new Point(m.getX(), m.getY()); theItem = findItem(p); mouseIsPressed = true;
+		 * });
+		 * 
+		 * root.addEventHandler(MouseEvent.MOUSE_RELEASED, (MouseEvent m) -> {
+		 * mouseIsPressed = false; });
+		 * 
+		 * root.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent m)-> { Point p =
+		 * new Point(m.getX(), m.getY()); if(theItem!=null) {theItem.dragged(p); } });
+		 */
 	}
 
 	public GeneralShape findItem(Point p) {
@@ -139,7 +149,22 @@ public class MainUI extends Application {
 				currentMode = Mode.LINE;
 			});
 			
-
+//			public void putText() {
+//				System.out.println("Putting text on screen.");
+//
+//				String textFieldInput = textField.getText();
+//				System.out.println("Text Field Input: " + textFieldInput);
+//
+//				label = new Label(textFieldInput);
+//				double randX = Math.random() * 800;
+//				double randY = Math.random() * 800;
+//				System.out.println("randx: " + randX + " randy: " + randY);
+//				label.relocate(randX, randY);
+//				// label.setText(textFieldInput);
+//
+//				root.getChildren().add(label);
+//
+//			}
 			puttextB.setOnAction(e -> {
 				System.out.println("Put Text Button Pressed");
 
@@ -203,7 +228,6 @@ public class MainUI extends Application {
 					mouseIsPressed = true;
 				} else if (currentMode == Mode.LINE) {
 					dl = new DraggableLine(m.getX(), m.getY(), m.getX(), m.getY());
-					dl.setOrigCoordStart(m.getX(), m.getY());
 					root.getChildren().add(dl);
 					itemList.add(dl);
 					mouseIsPressed = true;
@@ -233,8 +257,6 @@ public class MainUI extends Application {
 //					l.setEndY(m.getY());
 					dl.getLine().setEndX(m.getX());
 					dl.getLine().setEndY(m.getY());
-					dl.setOrigCoordEnd(m.getX(), m.getY());
-					
 				} else if (currentMode == Mode.SELECT) {
 					Point p = new Point(m);
 					if (theItem != null) {

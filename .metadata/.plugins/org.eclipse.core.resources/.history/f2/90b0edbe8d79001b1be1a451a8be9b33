@@ -80,29 +80,29 @@ public class DraggableLine extends GeneralShape {
 
 	@Override
 	void dragged(Point p, MouseEvent m) {
-//		// TODO Auto-generated method stub
-//		double distAC = Math.hypot(origStartX - m.getX(), origStartY - m.getY());
-//		double distBC = Math.hypot(origEndX - this.mouseX, origEndY - this.mouseY);
-//		
-//		System.out.println("distAC: " + distAC);
-//		System.out.println("distBC: " + distBC);
-//		
-//		if (distAC < distBC) {
-//			double distx = m.getSceneX() - this.mouseX;;
-//			double disty = m.getSceneY() - this.mouseY;;
-//			this.l.setStartX(distx);
-//			this.l.setStartX(disty);
-////			this.l.setStartX(m.getX());
-////			this.l.setStartY(m.getY());
-//		}
-//		else if (distAC > distBC) {
-//			double distx = m.getSceneX() - this.mouseX;;
-//			double disty = m.getSceneY() - this.mouseY;;
-//			this.l.setEndX(distx);
-//			this.l.setEndX(disty);
-////			this.l.setEndX(m.getX());
-////			this.l.setEndX(m.getY());
-//		}
+		// TODO Auto-generated method stub
+		double distAC = Math.hypot(origStartX - this.mouseX, origStartY - this.mouseY);
+		double distBC = Math.hypot(origEndX - this.mouseX, origEndY - this.mouseY);
+		
+		System.out.println("distAC: " + distAC);
+		System.out.println("distBC: " + distBC);
+		
+		if (distAC < distBC) {
+			double distx = m.getSceneX() - this.mouseX;;
+			double disty = m.getSceneY() - this.mouseY;;
+			this.l.setStartX(distx);
+			this.l.setStartX(disty);
+//			this.l.setStartX(m.getX());
+//			this.l.setStartY(m.getY());
+		}
+		else if (distAC > distBC) {
+			double distx = m.getSceneX() - this.mouseX;;
+			double disty = m.getSceneY() - this.mouseY;;
+			this.l.setEndX(distx);
+			this.l.setEndX(disty);
+//			this.l.setEndX(m.getX());
+//			this.l.setEndX(m.getY());
+		}
 		
 		
 		
@@ -118,17 +118,6 @@ public class DraggableLine extends GeneralShape {
 	void setMouseY(double y) {
 		// TODO Auto-generated method stub
 		this.mouseY = y;
-	}
-
-	String convertToString() {
-		// TODO Auto-generated method stub
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("box ");
-		
-		
-		String result = sb.toString();
-		return result;
 	}
 	
 }

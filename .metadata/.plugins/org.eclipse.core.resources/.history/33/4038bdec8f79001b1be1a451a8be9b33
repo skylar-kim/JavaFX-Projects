@@ -119,16 +119,5 @@ public class DraggableLine extends GeneralShape {
 		// TODO Auto-generated method stub
 		this.mouseY = y;
 	}
-
-	String convertToString() {
-		// TODO Auto-generated method stub
-		StringBuilder sb = new StringBuilder();
-		
-		sb.append("box ");
-		
-		
-		String result = sb.toString();
-		return result;
-	}
 	
 }

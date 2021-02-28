@@ -101,12 +101,10 @@ public class DraggableRectangle extends GeneralShape {
 		this.mouseY = y;
 	}
 	
+	@Override
 	String convertToString() {
 		// TODO Auto-generated method stub
-		StringBuilder sb = new StringBuilder();
-		
-		String result = sb.toString();
-		return result;
+		return null;
 	}
 
 }

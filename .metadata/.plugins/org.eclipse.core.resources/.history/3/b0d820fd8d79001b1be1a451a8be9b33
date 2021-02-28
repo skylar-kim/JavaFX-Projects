@@ -78,7 +78,17 @@ public class MainUI extends Application {
 		PaintMenu paintMenu = new PaintMenu();
 
 		root.getChildren().add(paintMenu);
-		
+		/*
+		 * root.addEventHandler(MouseEvent.MOUSE_PRESSED, (MouseEvent m) -> { Point p =
+		 * new Point(m.getX(), m.getY()); theItem = findItem(p); mouseIsPressed = true;
+		 * });
+		 * 
+		 * root.addEventHandler(MouseEvent.MOUSE_RELEASED, (MouseEvent m) -> {
+		 * mouseIsPressed = false; });
+		 * 
+		 * root.addEventHandler(MouseEvent.MOUSE_DRAGGED, (MouseEvent m)-> { Point p =
+		 * new Point(m.getX(), m.getY()); if(theItem!=null) {theItem.dragged(p); } });
+		 */
 	}
 
 	public GeneralShape findItem(Point p) {
