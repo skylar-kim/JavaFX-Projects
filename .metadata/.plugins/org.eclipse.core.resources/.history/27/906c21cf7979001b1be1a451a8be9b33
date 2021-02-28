@@ -1,0 +1,79 @@
+package PaintKim;
+
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import mousing.Point;
+
+public class DraggableRectangle extends GeneralShape {
+	Rectangle r;
+	Point imAt;
+	private double x = 0;
+	private double y = 0;
+	private double mousex = 0;
+	private double mousey = 0;
+
+	public DraggableRectangle(double xCoord, double yCoord) {
+		r = new Rectangle(xCoord, yCoord);
+		getChildren().add(r);
+	}
+
+	public Rectangle getRectangle() {
+		return this.r;
+	}
+
+	public void setimAt(double x, double y) {
+		imAt = new Point(x, y);
+	}
+
+
+	@Override
+	void setColor(Color c) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	void dragged(Point p) {
+		// TODO Auto-generated method stub
+		setLayoutX(p.getX());
+		setLayoutY(p.getY());
+		imAt = p;
+		System.out.println("imAt x: " + imAt.getX());
+		System.out.println("imAt Y: " + imAt.getY());
+
+	}
+
+	@Override
+	protected boolean zatYou(PaintKim.Point p) {
+		System.out.println("zatYou x="+p.getX()+" y="+p.getY());
+		double x1 = this.r.getX();
+		double y1 = this.r.getY();
+		double x2 = x1 + this.r.getWidth();
+		//double y2 = y1;
+		//double x3 = x1;
+		double y3 = y1 + this.r.getHeight();
+		//double x4 = x2;
+		//double y4 = y3;
+		
+		boolean isOnRect = false;
+		isOnRect = ((p.getX() >= x1 && p.getX() <= x2) && (p.getY() >= y1 && p.getY() <= y3));
+		System.out.println("zatYou ret="+isOnRect);
+		return isOnRect;
+	}
+
+	@Override
+	void dragged(PaintKim.Point p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	void setSelected(boolean bool) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

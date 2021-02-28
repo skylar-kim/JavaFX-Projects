@@ -1,0 +1,82 @@
+package PaintKim;
+
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Line;
+
+public class DraggableLine extends Line {
+	Point imAt;
+	private double x = 0;
+	private double y = 0;
+	private double mousex = 0;
+	private double mousey = 0;
+	
+	public DraggableLine(double xStart, double yStart, double xEnd, double yEnd) {
+		super(xStart, yStart, xEnd, yEnd);
+		
+//		onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent m) {
+//				
+//				// record the current mouse X and Y position
+//				mousex = m.getSceneX();
+//				mousey = m.getSceneY();
+//				
+//				x = getLayoutX();
+//				y = getLayoutY();
+//				
+//				System.out.println("Line Mousex: " + mousex);
+//				System.out.println("Line Mousey: " + mousey);
+//				System.out.println("Line x: " + getLayoutX());
+//				System.out.println("Line y: " + getLayoutY());
+//
+//			}
+//		});
+//		
+//		onMouseDraggedProperty().set(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent m) {
+//				double distx = m.getSceneX() - mousex;
+//				double disty = m.getSceneY() - mousey;
+//				
+//				x += distx;
+//				y += disty;
+//				
+//				setLayoutX(x);
+//				setLayoutY(y);
+//				
+//				
+//				mousex = m.getSceneX();
+//				mousey = m.getSceneY();
+//				
+//				m.consume();
+//			}
+//		});
+//		
+//		onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent m) {
+//				// not really do anything...
+//				mousex = m.getSceneX();
+//				mousey = m.getSceneY();
+//				System.out.println("Line Mousex: " + mousex);
+//				System.out.println("Line Mousey: " + mousey);
+//			}
+//		});
+	}
+	
+	public boolean zatYou(Point p) {
+		System.out.println("zatYou x="+p.getX()+" y="+p.getY());
+		double lineDist = Math.hypot(this.getEndX() - this.getStartX(), this.getEndY() - this.getStartY());
+		double dist1 = Math.hypot(this.getEndX() - p.getX(), this.getEndY() - p.getY());
+		double dist2 = Math.hypot(this.getStartX() - p.getX(), this.getStartY() - p.getY());
+		System.out.println("Line Dist: " + lineDist);
+		System.out.println("dist1: " + dist1);
+		System.out.println("dist2: " + dist2);
+		boolean isOnLine = ( (((int)dist1+(int)dist2) > (int)lineDist - 5) && 
+				(((int)dist1+(int)dist2) < (int)lineDist + 5));
+		
+     	System.out.println("zatYou ret="+isOnLine);
+     	return isOnLine; 
+	}
+}

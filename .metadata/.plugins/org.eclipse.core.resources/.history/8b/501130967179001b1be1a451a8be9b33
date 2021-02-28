@@ -1,0 +1,7 @@
+package PaintKim;
+
+public abstract class GeneralShape extends Group {
+	abstract void setColor(Color c);
+	abstract void setSelected(boolean bool);
+	abstract void dragged();
+}

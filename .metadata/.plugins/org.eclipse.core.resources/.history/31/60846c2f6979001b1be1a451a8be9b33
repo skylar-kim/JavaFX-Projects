@@ -1,0 +1,70 @@
+package PaintKim;
+
+import javafx.event.EventHandler;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Line;
+
+public class DraggableLine extends Line {
+	private double x = 0;
+	private double y = 0;
+	private double mousex = 0;
+	private double mousey = 0;
+	
+	public DraggableLine(double xStart, double yStart, double xEnd, double yEnd) {
+		super(xStart, yStart, xEnd, yEnd);
+		
+//		onMousePressedProperty().set(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent m) {
+//				
+//				// record the current mouse X and Y position
+//				mousex = m.getSceneX();
+//				mousey = m.getSceneY();
+//				
+//				x = getLayoutX();
+//				y = getLayoutY();
+//				
+//				System.out.println("Line Mousex: " + mousex);
+//				System.out.println("Line Mousey: " + mousey);
+//				System.out.println("Line x: " + getLayoutX());
+//				System.out.println("Line y: " + getLayoutY());
+//
+//			}
+//		});
+//		
+//		onMouseDraggedProperty().set(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent m) {
+//				double distx = m.getSceneX() - mousex;
+//				double disty = m.getSceneY() - mousey;
+//				
+//				x += distx;
+//				y += disty;
+//				
+//				setLayoutX(x);
+//				setLayoutY(y);
+//				
+//				
+//				mousex = m.getSceneX();
+//				mousey = m.getSceneY();
+//				
+//				m.consume();
+//			}
+//		});
+//		
+//		onMouseClickedProperty().set(new EventHandler<MouseEvent>() {
+//			@Override
+//			public void handle(MouseEvent m) {
+//				// not really do anything...
+//				mousex = m.getSceneX();
+//				mousey = m.getSceneY();
+//				System.out.println("Line Mousex: " + mousex);
+//				System.out.println("Line Mousey: " + mousey);
+//			}
+//		});
+	}
+	
+	public boolean zatYou(Point m) {
+		System.out.println("zatYou x="+m.getX()+" y="+m.getY());
+	}
+}

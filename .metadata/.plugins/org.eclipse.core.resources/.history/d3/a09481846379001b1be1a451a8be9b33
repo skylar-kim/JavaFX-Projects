@@ -1,0 +1,14 @@
+package PaintKim;
+
+public class DraggableLine extends Line {
+	private double x = 0;
+	private double y = 0;
+	private double mousex = 0;
+	private double mousey = 0;
+	
+	public DraggableLine(double xStart, double yStart, double xEnd, double yEnd) {
+		super(xStart, yStart, xEnd, yEnd);
+		
+		
+	}
+}
