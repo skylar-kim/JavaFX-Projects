@@ -1,10 +1,5 @@
 package PaintKim;
-/* Name: Skylar Kim
- * USCID: 2353559966
- * Course: ITP 368
- * Semester: Spring 2021
- * Instructor: Professor Barrett Koster
- * */
+
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
@@ -21,8 +16,7 @@ public class DraggableRectangle extends GeneralShape {
 	private double y = 0;
 	private double mousex = 0;
 	private double mousey = 0;
-	
-	// Constructors
+
 	public DraggableRectangle(double xCoord, double yCoord) {
 		r = new Rectangle(xCoord, yCoord);
 		getChildren().add(r);
@@ -72,7 +66,7 @@ public class DraggableRectangle extends GeneralShape {
 
 	@Override
 	protected boolean zatYou(PaintKim.Point p) {
-//		System.out.println("zatYou x="+p.getX()+" y="+p.getY());
+		System.out.println("zatYou x="+p.getX()+" y="+p.getY());
 		double x1 = this.r.getX();
 		double y1 = this.r.getY();
 		double x2 = x1 + this.r.getWidth();
@@ -80,7 +74,7 @@ public class DraggableRectangle extends GeneralShape {
 		
 		boolean isOnRect = false;
 		isOnRect = ((p.getX() >= x1 && p.getX() <= x2) && (p.getY() >= y1 && p.getY() <= y3));
-//		System.out.println("zatYou ret="+isOnRect);
+		System.out.println("zatYou ret="+isOnRect);
 		return isOnRect;
 	}
 

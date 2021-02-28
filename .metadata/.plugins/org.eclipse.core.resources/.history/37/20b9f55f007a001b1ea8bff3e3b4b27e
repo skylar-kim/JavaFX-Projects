@@ -52,7 +52,6 @@ public class DraggableLine extends GeneralShape {
 		double lineDist = Math.hypot(this.l.getEndX() - this.l.getStartX(), this.l.getEndY() - this.l.getStartY());
 		double dist1 = Math.hypot(this.l.getEndX() - p.getX(), this.l.getEndY() - p.getY());
 		double dist2 = Math.hypot(this.l.getStartX() - p.getX(), this.l.getStartY() - p.getY());
-		// Print statements for debugging
 //		System.out.println("zatYou x=" + p.getX() + " y=" + p.getY());
 //		System.out.println("L startX: " + this.l.getStartX() + "L startY: " + this.l.getStartY());
 //		System.out.println("L endX: " + this.l.getEndX() + "L endY: " + this.l.getEndY());

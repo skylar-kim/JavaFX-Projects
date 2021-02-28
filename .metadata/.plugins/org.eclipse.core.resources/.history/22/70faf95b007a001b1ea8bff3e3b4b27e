@@ -1,10 +1,5 @@
 package PaintKim;
-/* Name: Skylar Kim
- * USCID: 2353559966
- * Course: ITP 368
- * Semester: Spring 2021
- * Instructor: Professor Barrett Koster
- * */
+
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
@@ -52,7 +47,6 @@ public class DraggableLine extends GeneralShape {
 		double lineDist = Math.hypot(this.l.getEndX() - this.l.getStartX(), this.l.getEndY() - this.l.getStartY());
 		double dist1 = Math.hypot(this.l.getEndX() - p.getX(), this.l.getEndY() - p.getY());
 		double dist2 = Math.hypot(this.l.getStartX() - p.getX(), this.l.getStartY() - p.getY());
-		// Print statements for debugging
 //		System.out.println("zatYou x=" + p.getX() + " y=" + p.getY());
 //		System.out.println("L startX: " + this.l.getStartX() + "L startY: " + this.l.getStartY());
 //		System.out.println("L endX: " + this.l.getEndX() + "L endY: " + this.l.getEndY());
@@ -89,8 +83,7 @@ public class DraggableLine extends GeneralShape {
 	void dragged(Point p, MouseEvent m) {
 		double distAC = Math.hypot(this.l.getStartX() - m.getX(), this.l.getStartY() - m.getY());
 		double distBC = Math.hypot(this.l.getEndX() - m.getX(), this.l.getEndY() - m.getY());
-		
-		// Print statements for debugging
+
 //		System.out.println("distAC: " + distAC);
 //		System.out.println("distBC: " + distBC);
 //		System.out.println("m.getX: " + m.getX());
@@ -99,7 +92,6 @@ public class DraggableLine extends GeneralShape {
 		if (distAC < distBC) {
 			this.l.setStartX(m.getX());
 			this.l.setStartY(m.getY());
-			// Print statements for debugging
 //			System.out.println("Line's start x: " + this.l.getStartX());
 //			System.out.println("Line's start Y: " + this.l.getStartY());
 //			System.out.println("Line's end x: " + this.l.getEndX());
@@ -107,7 +99,6 @@ public class DraggableLine extends GeneralShape {
 		} else if (distAC > distBC) {
 			this.l.setEndX(m.getX());
 			this.l.setEndY(m.getY());
-			// Print statements for debugging
 //			System.out.println("Line's start x: " + this.l.getStartX());
 //			System.out.println("Line's start Y: " + this.l.getStartY());
 //			System.out.println("Line's end x: " + this.l.getEndX());

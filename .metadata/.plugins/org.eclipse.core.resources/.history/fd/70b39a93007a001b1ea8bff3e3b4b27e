@@ -1,11 +1,5 @@
 package PaintKim;
-/* Name: Skylar Kim
- * USCID: 2353559966
- * Course: ITP 368
- * Semester: Spring 2021
- * Instructor: Professor Barrett Koster
- * */
- 
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
